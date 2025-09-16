@@ -1,0 +1,60 @@
+{
+  "root": true,
+  "ignorePatterns": ["dist/**", "node_modules/**"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.json", "tsconfig.*.json", "projects/*/tsconfig.*.json"]
+      },
+      "extends": [
+        "eslint:recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:prettier/recommended"
+      ],
+      "plugins": ["@angular-eslint", "@typescript-eslint", "prettier"],
+      "rules": {
+        "no-console": ["error", { "allow": ["warn", "error"] }],
+        "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+
+        "@angular-eslint/directive-selector": ["error", { "type": "attribute", "prefix": "cb", "style": "camelCase" }],
+        "@angular-eslint/component-selector": ["error", { "type": "element", "prefix": "cb", "style": "kebab-case" }],
+
+        "no-restricted-imports": ["error", { "paths": [{ "name": "rxjs/Rx", "message": "Importuj bezpośrednio z 'rxjs'." }] }],
+
+        "@typescript-eslint/member-ordering": ["error", {
+          "default": [
+            "public-static-field",
+            "public-instance-field",
+            "private-static-field",
+            "private-instance-field",
+            "public-constructor",
+            "private-constructor",
+            "public-instance-method",
+            "protected-instance-method",
+            "private-instance-method"
+          ]
+        }],
+        "no-fallthrough": "error",
+        "@typescript-eslint/no-inferrable-types": ["error", { "ignoreParameters": true }],
+        "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }],
+        "@typescript-eslint/unbound-method": ["error", { "ignoreStatic": true }],
+
+        "@typescript-eslint/consistent-type-imports": "error",
+
+        "prettier/prettier": ["error"],
+
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {}
+    }
+  ]
+}
