@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 jobs:
-  cut-release:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout develop
