@@ -1,2 +1,3 @@
-# Codexbrot
-Mandelbrot generator maked by Codex AI Agent from OpenAI.
+# ng-ultimate-base
+
+Angular base template - including Clean Code / Architecture + CI/CD
