@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version in format X.Y.Z (ex. 0.1.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  cut-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          fetch-depth: 0
+
+      - name: Basic version sanity check
+        run: |
+          if ! [[ "${{ github.event.inputs.version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Version must be X.Y.Z"; exit 1; fi
+
+      - name: Create release branch
+        run: |
+          REL="release/${{ github.event.inputs.version }}"
+          git switch -c "$REL"
+          git push origin "$REL"
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build (prod)
+        run: npm run build -- --configuration=production
+
+      - name: Zip artifact
+        run: |
+          mkdir -p out
+          cd dist
+          zip -r ../out/ng-ultimate-base-${{ github.event.inputs.version }}.zip .
+          cd ..
+
+      - name: Create tag
+        run: |
+          git tag "v${{ github.event.inputs.version }}"
+          git push origin "v${{ github.event.inputs.version }}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          name: v${{ github.event.inputs.version }}
+          draft: false
+          prerelease: false
+          files: |
+            out/ng-ultimate-base-${{ github.event.inputs.version }}.zip

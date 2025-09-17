@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop]
+
+permissions:
+  contents: read
+
+jobs:
+  angular-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint --if-present
+
+      - name: Test (headless)
+        run: npm test -- --watch=false --browsers=ChromeHeadless --no-progress
+
+      - name: Build (prod)
+        run: npm run build -- --configuration=production
+
+      - name: Upload dist as artifact (for PR review)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ng-dist
+          path: dist
