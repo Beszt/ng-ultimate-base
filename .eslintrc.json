@@ -20,24 +20,36 @@
         "no-console": ["error", { "allow": ["warn", "error"] }],
         "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
 
-        "@angular-eslint/directive-selector": ["error", { "type": "attribute", "prefix": "cb", "style": "camelCase" }],
-        "@angular-eslint/component-selector": ["error", { "type": "element", "prefix": "cb", "style": "kebab-case" }],
+        "@angular-eslint/directive-selector": [
+          "error",
+          { "type": "attribute", "prefix": "app", "style": "camelCase" }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          { "type": "element", "prefix": "app", "style": "kebab-case" }
+        ],
 
-        "no-restricted-imports": ["error", { "paths": [{ "name": "rxjs/Rx", "message": "Importuj bezpośrednio z 'rxjs'." }] }],
+        "no-restricted-imports": [
+          "error",
+          { "paths": [{ "name": "rxjs/Rx", "message": "Importuj bezpośrednio z 'rxjs'." }] }
+        ],
 
-        "@typescript-eslint/member-ordering": ["error", {
-          "default": [
-            "public-static-field",
-            "public-instance-field",
-            "private-static-field",
-            "private-instance-field",
-            "public-constructor",
-            "private-constructor",
-            "public-instance-method",
-            "protected-instance-method",
-            "private-instance-method"
-          ]
-        }],
+        "@typescript-eslint/member-ordering": [
+          "error",
+          {
+            "default": [
+              "public-static-field",
+              "public-instance-field",
+              "private-static-field",
+              "private-instance-field",
+              "public-constructor",
+              "private-constructor",
+              "public-instance-method",
+              "protected-instance-method",
+              "private-instance-method"
+            ]
+          }
+        ],
         "no-fallthrough": "error",
         "@typescript-eslint/no-inferrable-types": ["error", { "ignoreParameters": true }],
         "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }],
