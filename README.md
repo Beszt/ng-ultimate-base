@@ -12,7 +12,7 @@ Designed to kickstart new projects with a clean architecture and ready-to-go dev
 - ESLint + Prettier + Husky (`pre-commit` checks)
 - Signals & Signal Store pattern
 - Light/Dark theme via CSS variables
-- i18n with JSON files (`assets/i18n`)
+- localization with ngx-translate (`assets/i18n`) and `translate` pipe
 - Configured environments (`dev` and `prod`)
 - Ready-to-use VSCode setup (`.vscode/`)
 - CI/CD workflows:

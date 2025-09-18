@@ -1,0 +1,7 @@
+{
+  "DEMO": {
+    "posts": "{{count}} Postów",
+    "loadN": "Załaduj {{count}} postów",
+    "loading": "Ładowanie..."
+  }
+}

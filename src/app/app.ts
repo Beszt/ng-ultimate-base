@@ -1,12 +1,12 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+
+import { DemoComponent } from './features/demo/components/demo/demo.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.scss',
+  standalone: true,
+  imports: [DemoComponent],
+  templateUrl: './app.compontent.html',
+  styleUrls: ['./app.compontent.scss'],
 })
-export class App {
-  protected readonly title = signal('ng-ultimate-base');
-}
+export class App {}
