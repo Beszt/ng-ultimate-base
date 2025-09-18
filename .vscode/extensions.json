@@ -1,3 +1,14 @@
 {
-  "recommendations": ["angular.ng-template"]
+  "recommendations": [
+    "angular.ng-template",
+    "johnpapa.angular2",
+    "mikael.angular-beastcode",
+    "alexiv.vscode-angular2-files",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "christian-kohler.path-intellisense",
+    "aaron-bond.better-comments",
+    "vscode-icons-team.vscode-icons"
+  ]
 }
