@@ -4,6 +4,10 @@
   "eslint.enable": true,
   "eslint.validate": ["typescript", "html"],
   "eslint.useFlatConfig": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "files.eol": "\n",
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -15,5 +19,8 @@
   },
   "[scss]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.trimAutoWhitespace": false
   }
 }
