@@ -5,6 +5,7 @@
   "singleQuote": true,
   "bracketSpacing": true,
   "endOfLine": "lf",
+  "plugins": ["prettier-plugin-tailwindcss"],
   "overrides": [
     {
       "files": "*.component.html",
