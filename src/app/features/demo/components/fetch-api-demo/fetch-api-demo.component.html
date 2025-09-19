@@ -1,13 +1,13 @@
 <div class="space-y-6">
   <div class="flex flex-wrap items-center justify-between gap-4">
     <h2 class="text-2xl font-semibold text-slate-900">
-      {{ 'DEMO.posts' | translate:{ count: 5 } }}
+      {{ 'DEMO.posts' | translate: { count: store.posts().length } }}
     </h2>
     <button
       (click)="onLoadMore()"
-      class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
     >
-      {{ 'DEMO.loadNposts' | translate:{ count: 10 } }}
+      {{ 'DEMO.loadNposts' | translate: { count: 10 } }}
     </button>
   </div>
 

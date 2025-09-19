@@ -20,6 +20,35 @@
     "fetchApiCard": {
       "title": "Prezentacja Fetch API",
       "description": "Poznaj posty obslugiwane przez signal store"
+    },
+    "storageCard": {
+      "title": "Prezentacja Storage",
+      "description": "Zapisz tekst w local i session storage z uzyciem globalnego store"
+    },
+    "storage": {
+      "explainer": "Zapisz zwykly tekst do pamieci przegladarki i zobacz jak SignalStore synchronizuje oba zasiegi.",
+      "local": {
+        "title": "Local storage"
+      },
+      "session": {
+        "title": "Session storage"
+      },
+      "label": "Wartosc",
+      "currentValue": "Zapisana wartosc",
+      "empty": "Brak danych",
+      "actions": {
+        "save": "Zapisz",
+        "clear": "Wyczysc"
+      },
+      "status": {
+        "available": "dostepne",
+        "unavailable": "tryb awaryjny"
+      },
+      "lastUpdated": "Ostatnia aktualizacja: {{scope}} o {{time}}",
+      "scope": {
+        "local": "local storage",
+        "session": "session storage"
+      }
     }
   },
   "LAYOUT": {

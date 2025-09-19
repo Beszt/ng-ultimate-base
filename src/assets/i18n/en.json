@@ -20,6 +20,35 @@
     "fetchApiCard": {
       "title": "Fetch API Demo",
       "description": "Explore posts handled by the SignalStore"
+    },
+    "storageCard": {
+      "title": "Storage Demo",
+      "description": "Persist text in local and session storage via the global store"
+    },
+    "storage": {
+      "explainer": "Save plain text into the browser storage and inspect how the SignalStore keeps both scopes in sync.",
+      "local": {
+        "title": "Local storage"
+      },
+      "session": {
+        "title": "Session storage"
+      },
+      "label": "Value",
+      "currentValue": "Persisted value",
+      "empty": "Nothing stored yet",
+      "actions": {
+        "save": "Save",
+        "clear": "Clear"
+      },
+      "status": {
+        "available": "available",
+        "unavailable": "fallback mode"
+      },
+      "lastUpdated": "Last update: {{scope}} at {{time}}",
+      "scope": {
+        "local": "local storage",
+        "session": "session storage"
+      }
     }
   },
   "LAYOUT": {

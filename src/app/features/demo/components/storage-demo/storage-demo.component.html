@@ -1,0 +1,133 @@
+<div class="space-y-6">
+  <p class="rounded-lg bg-slate-50 p-4 text-sm text-slate-600">
+    {{ 'DEMO.storage.explainer' | translate }}
+  </p>
+
+  <div class="grid gap-6 md:grid-cols-2">
+    <section class="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div class="flex items-center justify-between gap-3">
+        <h3 class="text-lg font-semibold text-slate-900">
+          {{ 'DEMO.storage.local.title' | translate }}
+        </h3>
+        <span
+          class="text-xs font-semibold uppercase tracking-wide"
+          [class.text-emerald-600]="store.availability().local"
+          [class.text-amber-600]="!store.availability().local"
+        >
+          {{
+            store.availability().local
+              ? ('DEMO.storage.status.available' | translate)
+              : ('DEMO.storage.status.unavailable' | translate)
+          }}
+        </span>
+      </div>
+
+      <label class="flex flex-col gap-2 text-sm font-medium text-slate-700">
+        {{ 'DEMO.storage.label' | translate }}
+        <input
+          type="text"
+          class="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+          [value]="localDraft()"
+          (input)="onLocalInput($any($event.target).value)"
+          [attr.aria-label]="'DEMO.storage.local.title' | translate"
+        />
+      </label>
+
+      <div class="space-y-2 rounded-md border border-dashed border-slate-300 p-3">
+        <span class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+          {{ 'DEMO.storage.currentValue' | translate }}
+        </span>
+        <p class="break-words text-sm text-slate-800">
+          {{ store.localValue() ?? ('DEMO.storage.empty' | translate) }}
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <button
+          type="button"
+          class="inline-flex items-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          (click)="saveLocal()"
+        >
+          {{ 'DEMO.storage.actions.save' | translate }}
+        </button>
+        <button
+          type="button"
+          class="inline-flex items-center rounded-md bg-slate-200 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-500"
+          (click)="clearLocal()"
+          [disabled]="store.localValue() === null && !localDraft()"
+        >
+          {{ 'DEMO.storage.actions.clear' | translate }}
+        </button>
+      </div>
+    </section>
+
+    <section class="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div class="flex items-center justify-between gap-3">
+        <h3 class="text-lg font-semibold text-slate-900">
+          {{ 'DEMO.storage.session.title' | translate }}
+        </h3>
+        <span
+          class="text-xs font-semibold uppercase tracking-wide"
+          [class.text-emerald-600]="store.availability().session"
+          [class.text-amber-600]="!store.availability().session"
+        >
+          {{
+            store.availability().session
+              ? ('DEMO.storage.status.available' | translate)
+              : ('DEMO.storage.status.unavailable' | translate)
+          }}
+        </span>
+      </div>
+
+      <label class="flex flex-col gap-2 text-sm font-medium text-slate-700">
+        {{ 'DEMO.storage.label' | translate }}
+        <input
+          type="text"
+          class="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+          [value]="sessionDraft()"
+          (input)="onSessionInput($any($event.target).value)"
+          [attr.aria-label]="'DEMO.storage.session.title' | translate"
+        />
+      </label>
+
+      <div class="space-y-2 rounded-md border border-dashed border-slate-300 p-3">
+        <span class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+          {{ 'DEMO.storage.currentValue' | translate }}
+        </span>
+        <p class="break-words text-sm text-slate-800">
+          {{ store.sessionValue() ?? ('DEMO.storage.empty' | translate) }}
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <button
+          type="button"
+          class="inline-flex items-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          (click)="saveSession()"
+        >
+          {{ 'DEMO.storage.actions.save' | translate }}
+        </button>
+        <button
+          type="button"
+          class="inline-flex items-center rounded-md bg-slate-200 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-500"
+          (click)="clearSession()"
+          [disabled]="store.sessionValue() === null && !sessionDraft()"
+        >
+          {{ 'DEMO.storage.actions.clear' | translate }}
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div
+    class="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600"
+    *ngIf="store.lastUpdatedScope() as scope"
+  >
+    {{
+      'DEMO.storage.lastUpdated' | translate:{
+        scope: ('DEMO.storage.scope.' + scope) | translate,
+        time: (store.lastUpdatedAt() | date:'mediumTime')
+      }
+    }}
+  </div>
+</div>
