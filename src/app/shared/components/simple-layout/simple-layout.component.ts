@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+
+import { APP_CONFIG } from '../../../core/config/app-config.token';
 
 @Component({
   selector: 'app-simple-layout',
@@ -10,4 +12,6 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./simple-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SimpleLayoutComponent {}
+export class SimpleLayoutComponent {
+  protected readonly appConfig = inject(APP_CONFIG);
+}

@@ -52,7 +52,7 @@
     }
   },
   "LAYOUT": {
-    "brand": "Strefa demo",
+    "brand": "{{appName}}",
     "nav": {
       "overview": "Przeglad",
       "features": "Funkcje",
@@ -60,3 +60,4 @@
     }
   }
 }
+

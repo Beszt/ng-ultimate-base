@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
+import { appStorageKey } from '../config/app-config.token';
 import type { StorageScope } from '../services/storage.service';
 import { StorageService } from '../services/storage.service';
 import { StorageStore } from './storage.store';
@@ -17,6 +18,9 @@ type StorageStoreContract = {
   clearLocal: () => void;
   clearSession: () => void;
 };
+
+const LOCAL_NOTE_KEY = appStorageKey('localNote');
+const SESSION_NOTE_KEY = appStorageKey('sessionNote');
 
 describe('StorageStore', () => {
   let store: StorageStoreContract;
@@ -44,14 +48,14 @@ describe('StorageStore', () => {
   it('hydrates the state with persisted values', () => {
     storage.isAvailable.and.callFake((scope?: StorageScope) => scope !== 'session');
     storage.get.and.callFake(<T>(key: string): T | null => {
-      expect(key).toBe('demo.localNote');
+      expect(key).toBe(LOCAL_NOTE_KEY);
       return 'local-value' as unknown as T;
     });
 
     store.hydrate();
 
     expect(storage.get.calls.count()).toBe(1);
-    expect(storage.get.calls.first().args).toEqual(['demo.localNote']);
+    expect(storage.get.calls.first().args).toEqual([LOCAL_NOTE_KEY]);
     expect(store.localValue()).toBe('local-value');
     expect(store.sessionValue()).toBeNull();
     expect(store.availability()).toEqual({ local: true, session: false });
@@ -68,7 +72,7 @@ describe('StorageStore', () => {
 
     const allArgs = storage.get.calls.allArgs();
     expect(allArgs).toEqual(
-      jasmine.arrayContaining([['demo.localNote'], ['demo.sessionNote', 'session']]),
+      jasmine.arrayContaining([[LOCAL_NOTE_KEY], [SESSION_NOTE_KEY, 'session']]),
     );
     expect(store.localValue()).toBe('local-value');
     expect(store.sessionValue()).toBe('session-value');
@@ -80,7 +84,7 @@ describe('StorageStore', () => {
 
     store.saveLocal('hello');
 
-    expect(storage.setLocal.calls.mostRecent().args).toEqual(['demo.localNote', 'hello']);
+    expect(storage.setLocal.calls.mostRecent().args).toEqual([LOCAL_NOTE_KEY, 'hello']);
     expect(store.localValue()).toBe('hello');
     expect(store.lastUpdatedScope()).toBe('local');
     expect(store.lastUpdatedAt()).toEqual(jasmine.any(Number));
@@ -93,7 +97,7 @@ describe('StorageStore', () => {
     store.saveSession('world');
     store.clearSession();
 
-    expect(storage.removeSession.calls.mostRecent().args).toEqual(['demo.sessionNote']);
+    expect(storage.removeSession.calls.mostRecent().args).toEqual([SESSION_NOTE_KEY]);
     expect(store.sessionValue()).toBeNull();
     expect(store.lastUpdatedScope()).toBe('session');
   });

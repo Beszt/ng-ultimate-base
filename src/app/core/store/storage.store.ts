@@ -3,6 +3,7 @@ import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 
 import type { StorageScope } from '../services/storage.service';
 import { StorageService } from '../services/storage.service';
+import { appStorageKey } from '../config/app-config.token';
 
 type StorageState = {
   localKey: string;
@@ -14,8 +15,8 @@ type StorageState = {
   availability: Record<StorageScope, boolean>;
 };
 
-const LOCAL_NOTE_KEY = 'demo.localNote';
-const SESSION_NOTE_KEY = 'demo.sessionNote';
+const LOCAL_NOTE_KEY = appStorageKey('localNote');
+const SESSION_NOTE_KEY = appStorageKey('sessionNote');
 
 export const StorageStore = signalStore(
   { providedIn: 'root' },

@@ -52,7 +52,7 @@
     }
   },
   "LAYOUT": {
-    "brand": "Demo Playground",
+    "brand": "{{appName}}",
     "nav": {
       "overview": "Overview",
       "features": "Features",
@@ -60,3 +60,4 @@
     }
   }
 }
+
