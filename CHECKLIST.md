@@ -35,8 +35,11 @@ Follow these steps after creating a new project from this template.
 
 ---
 
-## 5. Tailwind & UI
+## 5. Demo features & UI
 
+- [ ] Fetching Posts working
+- [ ] Toast occurs after loading posts
+- [ ] Local / session storage saving / gettings vars
 - [ ] Theme switch (light/dark) works
 
 ---
