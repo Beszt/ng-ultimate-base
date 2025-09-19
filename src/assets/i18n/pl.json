@@ -1,4 +1,11 @@
 {
+  "ERROR": {
+    "network": "Błąd sieci. Sprawdź swoje połączenie internetowe.",
+    "server": "Wewnętrzny błąd serwera. Spróbuj ponownie później.",
+    "notFound": "Nie znaleziono zasobu.",
+    "unauthorized": "Nieautoryzowany dostęp.",
+    "generic": "Wystąpił nieznany błąd. Spróbuj ponownie."
+  },
   "TOAST": {
     "success": "Sukces",
     "error": "Błąd",

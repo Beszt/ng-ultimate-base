@@ -16,7 +16,7 @@ import { provideToastr } from 'ngx-toastr';
 import { ThemeService } from './app/core/services/theme.service';
 import { LanguageService } from './app/core/services/language.service';
 import { StorageService } from './app/core/services/storage.service';
-import { App } from './app/app';
+import { AppComponent } from './app/app.component';
 import { routes } from './routes';
 import { httpErrorInterceptor } from './app/core/interceptors/http-error.interceptor';
 
@@ -24,7 +24,7 @@ function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-bootstrapApplication(App, {
+bootstrapApplication(AppComponent, {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),

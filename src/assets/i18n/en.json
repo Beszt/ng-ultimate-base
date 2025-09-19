@@ -1,4 +1,11 @@
 {
+  "ERROR": {
+    "network": "Network error. Check your internet connection.",
+    "server": "Internal server error. Please try again later.",
+    "notFound": "Resource not found.",
+    "unauthorized": "Unauthorized access.",
+    "generic": "An unknown error occurred. Please try again."
+  },
   "TOAST": {
     "success": "Success",
     "error": "Error",

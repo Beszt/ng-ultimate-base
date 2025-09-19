@@ -6,7 +6,7 @@ import { DemoComponent } from './features/demo/components/demo/demo.component';
   selector: 'app-root',
   standalone: true,
   imports: [DemoComponent],
-  templateUrl: './app.compontent.html',
-  styleUrls: ['./app.compontent.scss'],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
 })
-export class App {}
+export class AppComponent {}

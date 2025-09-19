@@ -15,6 +15,7 @@ It contains a preconfigured architecture, opinionated folder structure, and basi
 src/
  └── app/
      ├── core/             # cross-cutting concerns (services, interceptors, config)
+     │   ├── interceptors/
      │   ├── constants/
      │   ├── models/
      │   ├── services/
@@ -27,7 +28,7 @@ src/
      │   └── models/
      │
      ├── features/         # domain-specific features
-     │   └── demo/         # example feature (Signal Store ↔ Http ↔ Storage)
+     │   └── demo/         # example feature
      │
      └── app.component.*   # root bootstrap component
 ```
@@ -46,8 +47,9 @@ Contains functionality shared across the whole app:
 
 - **Configuration & init** → root providers, app config.
 - **ThemeService** → light/dark theme switching via CSS variables.
-- **StorageService** → wrapper for local/session storage with optional namespacing/TTL.
-- **Language Service** → wrapper fort service @ngx-translate based on browser language
+- **StorageService** → wrapper for local/session storage.
+- **LanguageService** → wrapper fort service @ngx-translate based on browser language
+- **ToastService** → wrapper for ToastR with build-in translates
 
 ---
 

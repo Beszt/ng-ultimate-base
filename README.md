@@ -13,6 +13,7 @@ Designed to kickstart new projects with a clean architecture and ready-to-go dev
 - Signals & Signal Store pattern
 - Light/Dark theme via CSS variables
 - localization with ngx-translate (`assets/i18n`) and `translate` pipe
+- Toast Service based on ToastR and auto transalates feature
 - Configured environments (`dev` and `prod`)
 - Ready-to-use VSCode setup (`.vscode/`)
 - CI/CD workflows:
