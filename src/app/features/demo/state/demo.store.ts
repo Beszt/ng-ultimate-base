@@ -1,13 +1,15 @@
-import { signalStore, withState, withMethods, withHooks, patchState } from '@ngrx/signals';
+import { signalStore, withState, withMethods, patchState } from '@ngrx/signals';
 import { inject } from '@angular/core';
-import { finalize } from 'rxjs/operators';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { EMPTY } from 'rxjs';
+import { switchMap, tap, catchError, finalize } from 'rxjs/operators';
 import type { DemoPost } from '../models/demo-post.model';
 import { DemoApiService } from '../services/demo-api.service';
-import { ToastService } from '../../../core/services/toast.service';
 
 type DemoState = {
   posts: DemoPost[];
   loading: boolean;
+  loadSuccessTick: number;
 };
 
 export const DemoStore = signalStore(
@@ -16,36 +18,33 @@ export const DemoStore = signalStore(
   withState<DemoState>({
     posts: [],
     loading: false,
+    loadSuccessTick: 0,
   }),
 
   withMethods((store) => {
     const api = inject(DemoApiService);
-    const toast = inject(ToastService);
 
-    function load(limit = 5, init = false): void {
-      patchState(store, { loading: true });
-
-      api
-        .fetchPosts(limit)
-        .pipe(finalize(() => patchState(store, { loading: false })))
-        .subscribe({
-          next: (data) => {
-            if (!init) toast.showSuccess('DEMO.loadedNposts', { count: data.length });
-            patchState(store, { posts: data });
-          },
-          error: (err) => {
-            toast.showSuccess(err as string);
-            patchState(store, { posts: [] });
-          },
-        });
-    }
+    const load = rxMethod<number>((limit$) =>
+      limit$.pipe(
+        tap(() => patchState(store, { loading: true })),
+        switchMap((limit) =>
+          api.fetchPosts(limit).pipe(
+            tap((data) =>
+              patchState(store, {
+                posts: data,
+                loadSuccessTick: store.loadSuccessTick() + 1,
+              }),
+            ),
+            catchError(() => {
+              patchState(store, { posts: [] });
+              return EMPTY;
+            }),
+            finalize(() => patchState(store, { loading: false })),
+          ),
+        ),
+      ),
+    );
 
     return { load };
-  }),
-
-  withHooks({
-    onInit(store) {
-      store.load(5, true);
-    },
   }),
 );

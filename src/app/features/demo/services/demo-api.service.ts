@@ -11,7 +11,7 @@ const API_BASE_URL = 'https://jsonplaceholder.typicode.com';
 export class DemoApiService {
   private readonly http = inject(HttpClient);
 
-  fetchPosts(limit = 5): Observable<DemoPost[]> {
+  fetchPosts(limit: number): Observable<DemoPost[]> {
     const params = new HttpParams().set('_limit', limit);
     return this.http.get<DemoPost[]>(`${API_BASE_URL}/posts`, { params });
   }

@@ -1,6 +1,6 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
   importProvidersFrom,
   inject,
@@ -18,6 +18,7 @@ import { LanguageService } from './app/core/services/language.service';
 import { StorageService } from './app/core/services/storage.service';
 import { App } from './app/app';
 import { routes } from './routes';
+import { httpErrorInterceptor } from './app/core/interceptors/http-error.interceptor';
 
 function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -28,7 +29,7 @@ bootstrapApplication(App, {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([httpErrorInterceptor])),
     provideAnimations(),
     provideToastr(),
     importProvidersFrom(

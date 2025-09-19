@@ -5,20 +5,48 @@
       "type": "npm",
       "script": "start",
       "isBackground": true,
-      "problemMatcher": "$tsc"
+      "problemMatcher": {
+        "owner": "angular",
+        "fileLocation": "absolute",
+        "pattern": [
+          {
+            "regexp": "^(.*):(\\d+):(\\d+) - error\\s+(TS\\d+):\\s+(.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "code": 4,
+            "message": 5
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*(watching|building|Starting development server|Vite dev server running).*",
+          "endsPattern": ".*(Compiled successfully|\\u2714|ready in \\d+ ms|Local:\\shttp).*"
+        }
+      }
     },
     {
       "type": "npm",
       "script": "test",
-      "isBackground": true
+      "isBackground": true,
+      "problemMatcher": "$tsc-watch"
     },
     {
       "type": "npm",
-      "script": "lint"
+      "script": "lint",
+      "problemMatcher": "$eslint-stylish"
     },
     {
       "type": "npm",
-      "script": "build"
+      "script": "build",
+      "problemMatcher": "$tsc"
+    },
+    {
+      "type": "npm",
+      "script": "install",
+      "group": "clean",
+      "label": "npm: install",
+      "detail": "install dependencies from package"
     }
   ]
 }
