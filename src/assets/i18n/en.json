@@ -16,6 +16,18 @@
     "posts": "{{count}} Posts",
     "loadNposts": "Load {{count}} posts",
     "loadedNposts": "Loaded {{count}} posts",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "fetchApiCard": {
+      "title": "Fetch API Demo",
+      "description": "Explore posts handled by the SignalStore"
+    }
+  },
+  "LAYOUT": {
+    "brand": "Demo Playground",
+    "nav": {
+      "overview": "Overview",
+      "features": "Features",
+      "docs": "Docs"
+    }
   }
 }

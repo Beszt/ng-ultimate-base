@@ -1,21 +1,33 @@
 {
   "ERROR": {
-    "network": "Błąd sieci. Sprawdź swoje połączenie internetowe.",
-    "server": "Wewnętrzny błąd serwera. Spróbuj ponownie później.",
+    "network": "Blad sieci. Sprawdz swoje polaczenie internetowe.",
+    "server": "Wewnetrzny blad serwera. Sprobuj ponownie pozniej.",
     "notFound": "Nie znaleziono zasobu.",
-    "unauthorized": "Nieautoryzowany dostęp.",
-    "generic": "Wystąpił nieznany błąd. Spróbuj ponownie."
+    "unauthorized": "Nieautoryzowany dostep.",
+    "generic": "Wystapil nieznany blad. Sprobuj ponownie."
   },
   "TOAST": {
     "success": "Sukces",
-    "error": "Błąd",
+    "error": "Blad",
     "info": "Informacja",
-    "warning": "Ostrzeżenie"
+    "warning": "Ostrzezenie"
   },
   "DEMO": {
-    "posts": "{{count}} Postów",
-    "loadNposts": "Załaduj {{count}} postów",
-    "loadedNposts": "Załadowano {{count}} postów",
-    "loading": "Ładowanie..."
+    "posts": "{{count}} Postow",
+    "loadNposts": "Zaladuj {{count}} postow",
+    "loadedNposts": "Zaladowano {{count}} postow",
+    "loading": "Ladowanie...",
+    "fetchApiCard": {
+      "title": "Prezentacja Fetch API",
+      "description": "Poznaj posty obslugiwane przez signal store"
+    }
+  },
+  "LAYOUT": {
+    "brand": "Strefa demo",
+    "nav": {
+      "overview": "Przeglad",
+      "features": "Funkcje",
+      "docs": "Dokumentacja"
+    }
   }
 }

@@ -19,11 +19,11 @@ export class FetchApiDemoComponent implements OnInit {
 
   ngOnInit(): void {
     this.initEffects();
-    this.store.load(5);
+    this.store.loadPosts(5);
   }
 
   onLoadMore(): void {
-    this.store.load(10);
+    this.store.loadPosts(10);
   }
 
   private initEffects(): void {

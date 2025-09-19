@@ -5,11 +5,11 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   selector: 'app-layout-card',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './layout-card.component.html',
-  styleUrls: ['./layout-card.component.scss'],
+  templateUrl: './simple-layout-card.component.html',
+  styleUrls: ['./simple-layout-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutCardComponent {
+export class SimpleLayoutCardComponent {
   @Input() title = '';
   @Input() description = '';
 }

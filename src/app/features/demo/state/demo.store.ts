@@ -24,7 +24,7 @@ export const DemoStore = signalStore(
   withMethods((store) => {
     const api = inject(DemoApiService);
 
-    const load = rxMethod<number>((limit$) =>
+    const loadPosts = rxMethod<number>((limit$) =>
       limit$.pipe(
         tap(() => patchState(store, { loading: true })),
         switchMap((limit) =>
@@ -45,6 +45,6 @@ export const DemoStore = signalStore(
       ),
     );
 
-    return { load };
+    return { loadPosts };
   }),
 );

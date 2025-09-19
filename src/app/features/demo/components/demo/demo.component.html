@@ -1,8 +1,8 @@
 <app-simple-layout>
   <div class="grid gap-6 lg:grid-cols-2">
     <app-layout-card
-      title="Fetch API Demo"
-      description="Explore JSONPlaceholder posts handled by the demo store and toast feedback."
+      [title]="'DEMO.fetchApiCard.title' | translate"
+      [description]="'DEMO.fetchApiCard.description' | translate"
     >
       <app-fetch-api-demo></app-fetch-api-demo>
     </app-layout-card>
