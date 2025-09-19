@@ -1,7 +1,9 @@
 <div class="min-h-screen bg-slate-50 text-slate-900">
   <header class="border-b border-slate-200 bg-white">
     <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-      <div class="text-lg font-semibold tracking-tight">{{ 'LAYOUT.brand' | translate: { appName: appConfig.name } }}</div>
+      <div class="text-lg font-semibold tracking-tight">
+        {{ 'LAYOUT.brand' | translate: { appName: appConfig.name } }}
+      </div>
       <nav class="flex items-center gap-4 text-sm font-medium text-slate-600">
         <button
           type="button"
@@ -28,4 +30,3 @@
     <ng-content></ng-content>
   </main>
 </div>
-

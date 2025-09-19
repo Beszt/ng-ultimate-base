@@ -10,15 +10,12 @@
           {{ 'DEMO.storage.local.title' | translate }}
         </h3>
         <span
-          class="text-xs font-semibold uppercase tracking-wide"
+          class="text-xs font-semibold tracking-wide uppercase"
           [class.text-emerald-600]="store.availability().local"
           [class.text-amber-600]="!store.availability().local"
         >
-          {{
-            store.availability().local
-              ? ('DEMO.storage.status.available' | translate)
-              : ('DEMO.storage.status.unavailable' | translate)
-          }}
+          {{ store.availability().local ? ('DEMO.storage.status.available' | translate) :
+          ('DEMO.storage.status.unavailable' | translate) }}
         </span>
       </div>
 
@@ -26,7 +23,7 @@
         {{ 'DEMO.storage.label' | translate }}
         <input
           type="text"
-          class="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+          class="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
           [value]="localDraft()"
           (input)="onLocalInput($any($event.target).value)"
           [attr.aria-label]="'DEMO.storage.local.title' | translate"
@@ -34,10 +31,10 @@
       </label>
 
       <div class="space-y-2 rounded-md border border-dashed border-slate-300 p-3">
-        <span class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+        <span class="text-xs font-semibold tracking-wide text-slate-500 uppercase">
           {{ 'DEMO.storage.currentValue' | translate }}
         </span>
-        <p class="break-words text-sm text-slate-800">
+        <p class="text-sm break-words text-slate-800">
           {{ store.localValue() ?? ('DEMO.storage.empty' | translate) }}
         </p>
       </div>
@@ -67,15 +64,12 @@
           {{ 'DEMO.storage.session.title' | translate }}
         </h3>
         <span
-          class="text-xs font-semibold uppercase tracking-wide"
+          class="text-xs font-semibold tracking-wide uppercase"
           [class.text-emerald-600]="store.availability().session"
           [class.text-amber-600]="!store.availability().session"
         >
-          {{
-            store.availability().session
-              ? ('DEMO.storage.status.available' | translate)
-              : ('DEMO.storage.status.unavailable' | translate)
-          }}
+          {{ store.availability().session ? ('DEMO.storage.status.available' | translate) :
+          ('DEMO.storage.status.unavailable' | translate) }}
         </span>
       </div>
 
@@ -83,7 +77,7 @@
         {{ 'DEMO.storage.label' | translate }}
         <input
           type="text"
-          class="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+          class="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
           [value]="sessionDraft()"
           (input)="onSessionInput($any($event.target).value)"
           [attr.aria-label]="'DEMO.storage.session.title' | translate"
@@ -91,10 +85,10 @@
       </label>
 
       <div class="space-y-2 rounded-md border border-dashed border-slate-300 p-3">
-        <span class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+        <span class="text-xs font-semibold tracking-wide text-slate-500 uppercase">
           {{ 'DEMO.storage.currentValue' | translate }}
         </span>
-        <p class="break-words text-sm text-slate-800">
+        <p class="text-sm break-words text-slate-800">
           {{ store.sessionValue() ?? ('DEMO.storage.empty' | translate) }}
         </p>
       </div>
@@ -123,11 +117,7 @@
     class="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600"
     *ngIf="store.lastUpdatedScope() as scope"
   >
-    {{
-      'DEMO.storage.lastUpdated' | translate:{
-        scope: ('DEMO.storage.scope.' + scope) | translate,
-        time: (store.lastUpdatedAt() | date:'mediumTime')
-      }
-    }}
+    {{ 'DEMO.storage.lastUpdated' | translate:{ scope: ('DEMO.storage.scope.' + scope) | translate,
+    time: (store.lastUpdatedAt() | date: 'mediumTime') } }}
   </div>
 </div>
