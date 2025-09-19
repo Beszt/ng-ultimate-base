@@ -28,7 +28,7 @@
                 "output": "/assets/"
               }
             ],
-            "styles": ["src/styles/styles.scss"]
+            "styles": ["src/styles/styles.scss", "node_modules/ngx-toastr/toastr.css"]
           },
           "configurations": {
             "production": {
@@ -82,7 +82,7 @@
                 "output": "/assets/"
               }
             ],
-            "styles": ["src/styles/styles.scss"]
+            "styles": ["src/styles/styles.scss", "node_modules/ngx-toastr/toastr.css"]
           }
         },
         "lint": {

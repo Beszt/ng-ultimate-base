@@ -1,7 +1,14 @@
 {
+  "TOAST": {
+    "success": "Sukces",
+    "error": "Błąd",
+    "info": "Informacja",
+    "warning": "Ostrzeżenie"
+  },
   "DEMO": {
     "posts": "{{count}} Postów",
-    "loadN": "Załaduj {{count}} postów",
+    "loadNposts": "Załaduj {{count}} postów",
+    "loadedNposts": "Załadowano {{count}} postów",
     "loading": "Ładowanie..."
   }
 }

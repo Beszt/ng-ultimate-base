@@ -1,7 +1,14 @@
 {
+  "TOAST": {
+    "success": "Success",
+    "error": "Error",
+    "info": "Info",
+    "warning": "Warning"
+  },
   "DEMO": {
     "posts": "{{count}} Posts",
-    "loadN": "Load {{count}} posts",
+    "loadNposts": "Load {{count}} posts",
+    "loadedNposts": "Loaded {{count}} posts",
     "loading": "Loading..."
   }
 }
