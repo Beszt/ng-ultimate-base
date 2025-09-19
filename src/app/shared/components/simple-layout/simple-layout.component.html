@@ -1,0 +1,30 @@
+<div class="min-h-screen bg-slate-50 text-slate-900">
+  <header class="border-b border-slate-200 bg-white">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <div class="text-lg font-semibold tracking-tight">Demo Playground</div>
+      <nav class="flex items-center gap-4 text-sm font-medium text-slate-600">
+        <button
+          type="button"
+          class="rounded-md px-3 py-1.5 transition hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+        >
+          Overview
+        </button>
+        <button
+          type="button"
+          class="rounded-md px-3 py-1.5 transition hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+        >
+          Features
+        </button>
+        <button
+          type="button"
+          class="rounded-md px-3 py-1.5 transition hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+        >
+          Docs
+        </button>
+      </nav>
+    </div>
+  </header>
+  <main class="mx-auto max-w-6xl px-6 py-10">
+    <ng-content></ng-content>
+  </main>
+</div>
