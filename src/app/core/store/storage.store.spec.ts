@@ -50,10 +50,8 @@ describe('StorageStore', () => {
 
     store.hydrate();
 
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const getSpy = storage.get as jasmine.Spy;
-    expect(getSpy.calls.count()).toBe(1);
-    expect(getSpy.calls.first().args).toEqual(['demo.localNote']);
+    expect(storage.get.calls.count()).toBe(1);
+    expect(storage.get.calls.first().args).toEqual(['demo.localNote']);
     expect(store.localValue()).toBe('local-value');
     expect(store.sessionValue()).toBeNull();
     expect(store.availability()).toEqual({ local: true, session: false });
@@ -68,9 +66,7 @@ describe('StorageStore', () => {
 
     store.hydrate();
 
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const getSpy = storage.get as jasmine.Spy;
-    const allArgs = getSpy.calls.allArgs();
+    const allArgs = storage.get.calls.allArgs();
     expect(allArgs).toEqual(
       jasmine.arrayContaining([['demo.localNote'], ['demo.sessionNote', 'session']]),
     );
@@ -80,30 +76,24 @@ describe('StorageStore', () => {
   });
 
   it('delegates saving to the storage service and updates the local state', () => {
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const setLocalSpy = storage.setLocal as jasmine.Spy;
-    setLocalSpy.and.stub();
+    storage.setLocal.and.stub();
 
     store.saveLocal('hello');
 
-    expect(setLocalSpy.calls.mostRecent().args).toEqual(['demo.localNote', 'hello']);
+    expect(storage.setLocal.calls.mostRecent().args).toEqual(['demo.localNote', 'hello']);
     expect(store.localValue()).toBe('hello');
     expect(store.lastUpdatedScope()).toBe('local');
     expect(store.lastUpdatedAt()).toEqual(jasmine.any(Number));
   });
 
   it('clears the session scope via the storage service', () => {
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const setSessionSpy = storage.setSession as jasmine.Spy;
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const removeSessionSpy = storage.removeSession as jasmine.Spy;
-    setSessionSpy.and.stub();
-    removeSessionSpy.and.stub();
+    storage.setSession.and.stub();
+    storage.removeSession.and.stub();
 
     store.saveSession('world');
     store.clearSession();
 
-    expect(removeSessionSpy.calls.mostRecent().args).toEqual(['demo.sessionNote']);
+    expect(storage.removeSession.calls.mostRecent().args).toEqual(['demo.sessionNote']);
     expect(store.sessionValue()).toBeNull();
     expect(store.lastUpdatedScope()).toBe('session');
   });

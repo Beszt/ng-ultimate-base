@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import { TestBed } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
 import type { IndividualConfig } from 'ngx-toastr';
@@ -47,8 +46,10 @@ describe('ToastService', () => {
 
     service.showSuccess('demo.message', params, options);
 
-    expect(translate.instant).toHaveBeenCalledWith('demo.message', params);
-    expect(toastr.success).toHaveBeenCalledWith('Loaded 3 posts', 'Success', options);
+    expect(translate.instant.calls.allArgs()).toEqual(
+      jasmine.arrayContaining([['demo.message', params]]),
+    );
+    expect(toastr.success.calls.mostRecent().args).toEqual(['Loaded 3 posts', 'Success', options]);
   });
 
   it('falls back to the message key when translation is missing', () => {
@@ -61,7 +62,7 @@ describe('ToastService', () => {
 
     service.showError('demo.missing');
 
-    expect(toastr.error).toHaveBeenCalledWith('demo.missing', 'Alert', undefined);
+    expect(toastr.error.calls.mostRecent().args).toEqual(['demo.missing', 'Alert', undefined]);
   });
 
   it('uses the original message key when translation resolves to undefined', () => {
@@ -74,7 +75,7 @@ describe('ToastService', () => {
 
     service.showInfo('demo.untranslated');
 
-    expect(toastr.info).toHaveBeenCalledWith('demo.untranslated', 'Info', undefined);
+    expect(toastr.info.calls.mostRecent().args).toEqual(['demo.untranslated', 'Info', undefined]);
   });
 
   it('uses raw message when it is not a translation key', () => {
@@ -85,7 +86,7 @@ describe('ToastService', () => {
 
     service.showSuccess('Hello world');
 
-    expect(toastr.success).toHaveBeenCalledWith('Hello world', 'Success', undefined);
+    expect(toastr.success.calls.mostRecent().args).toEqual(['Hello world', 'Success', undefined]);
   });
 
   it('delegates warning notifications to the ToastrService', () => {
@@ -95,6 +96,6 @@ describe('ToastService', () => {
 
     service.showWarn('demo.warning');
 
-    expect(toastr.warning).toHaveBeenCalledWith('Check this', 'Warning', undefined);
+    expect(toastr.warning.calls.mostRecent().args).toEqual(['Check this', 'Warning', undefined]);
   });
 });

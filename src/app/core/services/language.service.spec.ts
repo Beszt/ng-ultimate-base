@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import { TestBed } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -37,8 +36,8 @@ describe('LanguageService', () => {
 
     service.init();
 
-    expect(translate.setDefaultLang).toHaveBeenCalledWith('pl');
-    expect(translate.use).toHaveBeenCalledWith('pl');
+    expect(translate.setDefaultLang.calls.mostRecent().args).toEqual(['pl']);
+    expect(translate.use.calls.mostRecent().args).toEqual(['pl']);
     expect(document.documentElement.lang).toBe('pl');
   });
 
@@ -47,8 +46,8 @@ describe('LanguageService', () => {
 
     service.init();
 
-    expect(translate.setDefaultLang).toHaveBeenCalledWith('en');
-    expect(translate.use).toHaveBeenCalledWith('en');
+    expect(translate.setDefaultLang.calls.mostRecent().args).toEqual(['en']);
+    expect(translate.use.calls.mostRecent().args).toEqual(['en']);
     expect(document.documentElement.lang).toBe('en');
   });
 });

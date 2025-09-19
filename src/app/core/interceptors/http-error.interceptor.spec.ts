@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import { HttpErrorResponse, HttpRequest, HttpResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
@@ -43,31 +42,34 @@ describe('httpErrorInterceptor', () => {
 
     result$.subscribe();
 
-    expect(toast.showError).not.toHaveBeenCalled();
+    expect(toast.showError.calls.count()).toBe(0);
   });
 
   it('notifies about network errors (status 0)', () => {
     invokeInterceptor(new HttpErrorResponse({ status: 0 }));
 
-    expect(toast.showError).toHaveBeenCalledWith('ERROR.network', { reason: 'Network error' });
+    expect(toast.showError.calls.mostRecent().args).toEqual([
+      'ERROR.network',
+      { reason: 'Network error' },
+    ]);
   });
 
   it('notifies about server errors (>= 500)', () => {
     invokeInterceptor(new HttpErrorResponse({ status: 503 }));
 
-    expect(toast.showError).toHaveBeenCalledWith('ERROR.server', { code: 503 });
+    expect(toast.showError.calls.mostRecent().args).toEqual(['ERROR.server', { code: 503 }]);
   });
 
   it('notifies about missing resources (404)', () => {
     invokeInterceptor(new HttpErrorResponse({ status: 404 }));
 
-    expect(toast.showError).toHaveBeenCalledWith('ERROR.notFound');
+    expect(toast.showError.calls.mostRecent().args).toEqual(['ERROR.notFound']);
   });
 
   it('notifies about unauthorized errors (401/403)', () => {
     invokeInterceptor(new HttpErrorResponse({ status: 401 }));
 
-    expect(toast.showError).toHaveBeenCalledWith('ERROR.unauthorized');
+    expect(toast.showError.calls.mostRecent().args).toEqual(['ERROR.unauthorized']);
   });
 
   it('extracts reason from the error payload for generic errors', () => {
@@ -79,7 +81,10 @@ describe('httpErrorInterceptor', () => {
       }),
     );
 
-    expect(toast.showError).toHaveBeenCalledWith('ERROR.generic', { reason: 'Invalid payload' });
+    expect(toast.showError.calls.mostRecent().args).toEqual([
+      'ERROR.generic',
+      { reason: 'Invalid payload' },
+    ]);
   });
 
   it('falls back to the error message when payload reason is missing', () => {

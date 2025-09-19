@@ -1,7 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TestBed } from '@angular/core/testing';
 
-import { StorageService } from './storage.service';
+import { StorageService, type StorageScope } from './storage.service';
+
+type StorageServicePrivateApi = {
+  ensureStorage(scope: StorageScope): Storage | null;
+};
 
 describe('StorageService', () => {
   let service: StorageService;
@@ -47,7 +50,7 @@ describe('StorageService', () => {
   });
 
   it('falls back to in-memory storage when the target storage is unavailable', () => {
-    spyOn<any>(service, 'ensureStorage').and.returnValue(null);
+    spyOn(service as unknown as StorageServicePrivateApi, 'ensureStorage').and.returnValue(null);
 
     service.setLocal('demo.memory', { value: 1 });
 

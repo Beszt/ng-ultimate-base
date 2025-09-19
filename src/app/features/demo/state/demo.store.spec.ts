@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import { inject } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
@@ -42,7 +41,7 @@ describe('DemoStore', () => {
 
     store.loadPosts(5);
 
-    expect(api.fetchPosts).toHaveBeenCalledWith(5);
+    expect(api.fetchPosts.calls.mostRecent().args).toEqual([5]);
     expect(store.posts()).toEqual(posts);
     expect(store.loading()).toBeFalse();
     expect(store.loadSuccessTick()).toBe(1);
