@@ -1,0 +1,91 @@
+﻿<section
+  class="rounded-3xl border border-[color:var(--var-border)] bg-[color:var(--var-surface)]/85 p-6 shadow-sm transition-colors dark:bg-[color:var(--var-surface)]/90"
+>
+  <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <div class="space-y-2">
+      <h2 class="text-xl font-semibold text-[color:var(--var-text-primary)]">
+        {{ 'DEMO.themeDemo.title' | translate }}
+      </h2>
+      <p class="text-sm text-[color:var(--var-text-secondary)]">
+        {{ 'DEMO.themeDemo.description' | translate:{ theme: (themeLabelKey() | translate) } }}
+      </p>
+      <span
+        class="inline-flex items-center gap-2 rounded-full bg-[color:var(--var-background)] px-3 py-1 text-xs font-semibold tracking-wide text-[color:var(--var-text-secondary)] uppercase"
+      >
+        {{ 'DEMO.themeDemo.badge' | translate:{ mode: (themeLabelKey() | translate) } }}
+      </span>
+    </div>
+    <div class="flex flex-wrap items-center gap-2">
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-full border border-[color:var(--var-border)] px-3 py-1.5 text-sm font-semibold text-[color:var(--var-text-secondary)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
+        (click)="setTheme('light')"
+        [attr.aria-pressed]="theme() === 'light'"
+        [ngClass]="{
+          'bg-[color:var(--var-surface-subtle)] text-[color:var(--var-text-primary)] shadow-sm': theme() === 'light',
+          'hover:border-[color:var(--var-primary)]/40 hover:text-[color:var(--var-text-primary)]': theme() !== 'light'
+        }"
+      >
+        <span class="h-2.5 w-2.5 rounded-full bg-[color:var(--var-accent)]"></span>
+        {{ 'DEMO.themeDemo.actions.light' | translate }}
+      </button>
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-full border border-[color:var(--var-border)] px-3 py-1.5 text-sm font-semibold text-[color:var(--var-text-secondary)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
+        (click)="setTheme('dark')"
+        [attr.aria-pressed]="theme() === 'dark'"
+        [ngClass]="{
+          'bg-[color:var(--var-surface-subtle)] text-[color:var(--var-text-primary)] shadow-sm': theme() === 'dark',
+          'hover:border-[color:var(--var-primary)]/40 hover:text-[color:var(--var-text-primary)]': theme() !== 'dark'
+        }"
+      >
+        <span class="h-2.5 w-2.5 rounded-full bg-[color:var(--var-primary)]"></span>
+        {{ 'DEMO.themeDemo.actions.dark' | translate }}
+      </button>
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-full border border-dashed border-[color:var(--var-border)] px-3 py-1.5 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
+        (click)="useSystemPreference()"
+        [attr.aria-pressed]="isSystemPreferenceActive()"
+        [ngClass]="{
+          'border-[color:var(--var-primary)] text-[color:var(--var-primary)] shadow-sm': isSystemPreferenceActive(),
+          'text-[color:var(--var-text-secondary)] hover:border-[color:var(--var-primary)]/40 hover:text-[color:var(--var-text-primary)]': !isSystemPreferenceActive()
+        }"
+      >
+        <span
+          class="h-2.5 w-2.5 rounded-full border border-[color:var(--var-border)] bg-[color:var(--var-background)]"
+        ></span>
+        {{ 'DEMO.themeDemo.actions.system' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <p
+    class="mt-4 text-xs font-semibold tracking-wide text-[color:var(--var-text-secondary)] uppercase"
+  >
+    {{ systemLabelKey() | translate }}
+  </p>
+
+  <div class="mt-6 grid gap-4 md:grid-cols-2">
+    <article
+      *ngFor="let swatch of palette"
+      class="rounded-2xl border border-[color:var(--var-border)] bg-[color:var(--var-surface-subtle)] p-4 transition-colors dark:bg-[color:var(--var-surface)]"
+    >
+      <header
+        class="text-xs font-semibold tracking-wide text-[color:var(--var-text-secondary)] uppercase"
+      >
+        {{ swatch.labelKey | translate }}
+      </header>
+      <div
+        class="mt-3 h-24 rounded-xl border border-[color:var(--var-border)]"
+        [style.backgroundColor]="'var(' + swatch.token + ')'"
+        [style.color]="'var(' + swatch.contrastToken + ')'"
+      >
+        <div class="flex h-full flex-col justify-center gap-2 px-4 text-sm font-semibold">
+          <span>{{ swatch.token }}</span>
+          <span>{{ swatch.contrastToken }}</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

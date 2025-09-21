@@ -1,29 +1,37 @@
-<div class="min-h-screen bg-slate-50 text-slate-900">
-  <header class="border-b border-slate-200 bg-white">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+﻿<div
+  class="min-h-screen bg-[color:var(--var-background)] text-[color:var(--var-text-primary)] transition-colors duration-200"
+>
+  <header
+    class="border-b border-[color:var(--var-border)] bg-[color:var(--var-surface)]/95 backdrop-blur supports-[backdrop-filter]:bg-[color:var(--var-surface)]/80"
+  >
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
       <div class="text-lg font-semibold tracking-tight">
         {{ 'LAYOUT.brand' | translate: { appName: appConfig.name } }}
       </div>
-      <nav class="flex items-center gap-4 text-sm font-medium text-slate-600">
-        <button
-          type="button"
-          class="rounded-md px-3 py-1.5 transition hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+      <button
+        type="button"
+        class="inline-flex items-center gap-3 rounded-full border border-[color:var(--var-border)] bg-[color:var(--var-surface-subtle)] px-3 py-1.5 text-sm font-medium text-[color:var(--var-text-primary)] shadow-sm transition-all duration-200 hover:border-[color:var(--var-primary)]/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)] dark:bg-[color:var(--var-surface)]"
+        (click)="toggleTheme()"
+        [attr.aria-pressed]="isDark()"
+        [attr.aria-label]="toggleAriaKey() | translate"
+      >
+        <span
+          class="flex h-7 w-12 items-center rounded-full bg-[color:var(--var-surface)] p-0.5 transition-colors dark:bg-[color:var(--var-surface-subtle)]"
         >
-          {{ 'LAYOUT.nav.overview' | translate }}
-        </button>
-        <button
-          type="button"
-          class="rounded-md px-3 py-1.5 transition hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
-        >
-          {{ 'LAYOUT.nav.features' | translate }}
-        </button>
-        <button
-          type="button"
-          class="rounded-md px-3 py-1.5 transition hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
-        >
-          {{ 'LAYOUT.nav.docs' | translate }}
-        </button>
-      </nav>
+          <span
+            class="h-6 w-6 rounded-full bg-[color:var(--var-accent)] transition-transform duration-200 ease-out dark:bg-[color:var(--var-primary)]"
+            [class.translate-x-5]="isDark()"
+          ></span>
+        </span>
+        <span class="flex flex-col text-left leading-none">
+          <span
+            class="text-[11px] font-semibold tracking-wide text-[color:var(--var-text-secondary)] uppercase"
+          >
+            {{ 'LAYOUT.themeToggle.label' | translate }}
+          </span>
+          <span class="text-sm font-semibold"> {{ themeLabelKey() | translate }} </span>
+        </span>
+      </button>
     </div>
   </header>
   <main class="mx-auto max-w-6xl px-6 py-10">

@@ -1,4 +1,4 @@
-:root[data-theme='dark'] {
+﻿:root[data-theme='dark'] {
   --var-background: #0f172a;
   --var-surface: #1e293b;
   --var-surface-subtle: #111827;
@@ -11,4 +11,9 @@
   --var-success: #34d399;
   --var-danger: #f87171;
   color-scheme: dark;
+}
+
+body[data-theme='dark'] {
+  background-color: var(--var-background);
+  color: var(--var-text-primary);
 }

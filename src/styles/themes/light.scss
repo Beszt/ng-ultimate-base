@@ -1,4 +1,4 @@
-:root[data-theme='light'] {
+﻿:root[data-theme='light'] {
   --var-background: #f6f7fb;
   --var-surface: #ffffff;
   --var-surface-subtle: #f0f2f8;
@@ -11,4 +11,9 @@
   --var-success: #059669;
   --var-danger: #dc2626;
   color-scheme: light;
+}
+
+body[data-theme='light'] {
+  background-color: var(--var-background);
+  color: var(--var-text-primary);
 }

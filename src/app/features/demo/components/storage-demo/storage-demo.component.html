@@ -1,40 +1,50 @@
-<div class="space-y-6">
-  <p class="rounded-lg bg-slate-50 p-4 text-sm text-slate-600">
+﻿<div class="space-y-6">
+  <p
+    class="rounded-lg bg-[color:var(--var-surface-subtle)] p-4 text-sm text-[color:var(--var-text-secondary)]"
+  >
     {{ 'DEMO.storage.explainer' | translate }}
   </p>
 
   <div class="grid gap-6 md:grid-cols-2">
-    <section class="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <section
+      class="space-y-4 rounded-xl border border-[color:var(--var-border)] bg-[color:var(--var-surface)] p-5 shadow-sm transition-colors"
+    >
       <div class="flex items-center justify-between gap-3">
-        <h3 class="text-lg font-semibold text-slate-900">
+        <h3 class="text-lg font-semibold text-[color:var(--var-text-primary)]">
           {{ 'DEMO.storage.local.title' | translate }}
         </h3>
         <span
           class="text-xs font-semibold tracking-wide uppercase"
-          [class.text-emerald-600]="store.availability().local"
-          [class.text-amber-600]="!store.availability().local"
+          [ngClass]="{
+            'text-[color:var(--var-success)]': store.availability().local,
+            'text-[color:var(--var-accent)]': !store.availability().local
+          }"
         >
           {{ store.availability().local ? ('DEMO.storage.status.available' | translate) :
           ('DEMO.storage.status.unavailable' | translate) }}
         </span>
       </div>
 
-      <label class="flex flex-col gap-2 text-sm font-medium text-slate-700">
+      <label class="flex flex-col gap-2 text-sm font-medium text-[color:var(--var-text-secondary)]">
         {{ 'DEMO.storage.label' | translate }}
         <input
           type="text"
-          class="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+          class="rounded-md border border-[color:var(--var-border)] bg-[color:var(--var-surface)] px-3 py-2 text-sm text-[color:var(--var-text-primary)] shadow-sm transition focus:border-[color:var(--var-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
           [value]="localDraft()"
           (input)="onLocalInput($any($event.target).value)"
           [attr.aria-label]="'DEMO.storage.local.title' | translate"
         />
       </label>
 
-      <div class="space-y-2 rounded-md border border-dashed border-slate-300 p-3">
-        <span class="text-xs font-semibold tracking-wide text-slate-500 uppercase">
+      <div
+        class="space-y-2 rounded-md border border-dashed border-[color:var(--var-border)] bg-[color:var(--var-surface-subtle)] p-3"
+      >
+        <span
+          class="text-xs font-semibold tracking-wide text-[color:var(--var-text-secondary)] uppercase"
+        >
           {{ 'DEMO.storage.currentValue' | translate }}
         </span>
-        <p class="text-sm break-words text-slate-800">
+        <p class="text-sm break-words text-[color:var(--var-text-primary)]">
           {{ store.localValue() ?? ('DEMO.storage.empty' | translate) }}
         </p>
       </div>
@@ -42,14 +52,14 @@
       <div class="flex flex-wrap gap-3">
         <button
           type="button"
-          class="inline-flex items-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          class="inline-flex items-center rounded-md bg-[color:var(--var-primary)] px-3 py-2 text-sm font-semibold text-[color:var(--var-primary-contrast)] shadow-sm transition hover:bg-[color:var(--var-primary)]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
           (click)="saveLocal()"
         >
           {{ 'DEMO.storage.actions.save' | translate }}
         </button>
         <button
           type="button"
-          class="inline-flex items-center rounded-md bg-slate-200 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-500"
+          class="inline-flex items-center rounded-md bg-[color:var(--var-surface-subtle)] px-3 py-2 text-sm font-semibold text-[color:var(--var-text-primary)] transition hover:bg-[color:var(--var-surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
           (click)="clearLocal()"
           [disabled]="store.localValue() === null && !localDraft()"
         >
@@ -58,37 +68,45 @@
       </div>
     </section>
 
-    <section class="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <section
+      class="space-y-4 rounded-xl border border-[color:var(--var-border)] bg-[color:var(--var-surface)] p-5 shadow-sm transition-colors"
+    >
       <div class="flex items-center justify-between gap-3">
-        <h3 class="text-lg font-semibold text-slate-900">
+        <h3 class="text-lg font-semibold text-[color:var(--var-text-primary)]">
           {{ 'DEMO.storage.session.title' | translate }}
         </h3>
         <span
           class="text-xs font-semibold tracking-wide uppercase"
-          [class.text-emerald-600]="store.availability().session"
-          [class.text-amber-600]="!store.availability().session"
+          [ngClass]="{
+            'text-[color:var(--var-success)]': store.availability().session,
+            'text-[color:var(--var-accent)]': !store.availability().session
+          }"
         >
           {{ store.availability().session ? ('DEMO.storage.status.available' | translate) :
           ('DEMO.storage.status.unavailable' | translate) }}
         </span>
       </div>
 
-      <label class="flex flex-col gap-2 text-sm font-medium text-slate-700">
+      <label class="flex flex-col gap-2 text-sm font-medium text-[color:var(--var-text-secondary)]">
         {{ 'DEMO.storage.label' | translate }}
         <input
           type="text"
-          class="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
+          class="rounded-md border border-[color:var(--var-border)] bg-[color:var(--var-surface)] px-3 py-2 text-sm text-[color:var(--var-text-primary)] shadow-sm transition focus:border-[color:var(--var-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
           [value]="sessionDraft()"
           (input)="onSessionInput($any($event.target).value)"
           [attr.aria-label]="'DEMO.storage.session.title' | translate"
         />
       </label>
 
-      <div class="space-y-2 rounded-md border border-dashed border-slate-300 p-3">
-        <span class="text-xs font-semibold tracking-wide text-slate-500 uppercase">
+      <div
+        class="space-y-2 rounded-md border border-dashed border-[color:var(--var-border)] bg-[color:var(--var-surface-subtle)] p-3"
+      >
+        <span
+          class="text-xs font-semibold tracking-wide text-[color:var(--var-text-secondary)] uppercase"
+        >
           {{ 'DEMO.storage.currentValue' | translate }}
         </span>
-        <p class="text-sm break-words text-slate-800">
+        <p class="text-sm break-words text-[color:var(--var-text-primary)]">
           {{ store.sessionValue() ?? ('DEMO.storage.empty' | translate) }}
         </p>
       </div>
@@ -96,14 +114,14 @@
       <div class="flex flex-wrap gap-3">
         <button
           type="button"
-          class="inline-flex items-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          class="inline-flex items-center rounded-md bg-[color:var(--var-primary)] px-3 py-2 text-sm font-semibold text-[color:var(--var-primary-contrast)] shadow-sm transition hover:bg-[color:var(--var-primary)]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
           (click)="saveSession()"
         >
           {{ 'DEMO.storage.actions.save' | translate }}
         </button>
         <button
           type="button"
-          class="inline-flex items-center rounded-md bg-slate-200 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-500"
+          class="inline-flex items-center rounded-md bg-[color:var(--var-surface-subtle)] px-3 py-2 text-sm font-semibold text-[color:var(--var-text-primary)] transition hover:bg-[color:var(--var-surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
           (click)="clearSession()"
           [disabled]="store.sessionValue() === null && !sessionDraft()"
         >
@@ -114,7 +132,7 @@
   </div>
 
   <div
-    class="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600"
+    class="rounded-lg border border-[color:var(--var-border)] bg-[color:var(--var-surface-subtle)] px-4 py-3 text-xs text-[color:var(--var-text-secondary)]"
     *ngIf="store.lastUpdatedScope() as scope"
   >
     {{ 'DEMO.storage.lastUpdated' | translate:{ scope: ('DEMO.storage.scope.' + scope) | translate,

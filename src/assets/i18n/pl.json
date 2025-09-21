@@ -1,4 +1,4 @@
-{
+﻿{
   "ERROR": {
     "network": "Blad sieci. Sprawdz swoje polaczenie internetowe.",
     "server": "Wewnetrzny blad serwera. Sprobuj ponownie pozniej.",
@@ -49,6 +49,30 @@
         "local": "local storage",
         "session": "session storage"
       }
+    },
+    "themeDemo": {
+      "title": "Dynamiczna prezentacja motywu",
+      "description": "Zobacz jak globalna paleta reaguje podczas przelaczania {{theme}}.",
+      "badge": "Aktywny motyw: {{mode}}",
+      "mode": {
+        "light": "Tryb jasny",
+        "dark": "Tryb ciemny"
+      },
+      "actions": {
+        "light": "Jasny",
+        "dark": "Ciemny",
+        "system": "Domyslny systemu"
+      },
+      "system": {
+        "active": "Motyw podaza za ustawieniami systemu operacyjnego.",
+        "inactive": "Motyw ustawiony recznie i zapisany w tej przegladarce."
+      },
+      "tokens": {
+        "background": "Tlo strony",
+        "surface": "Powierzchnia",
+        "primary": "Kolor glowny",
+        "accent": "Dodatkowy akcent"
+      }
     }
   },
   "LAYOUT": {
@@ -57,6 +81,15 @@
       "overview": "Przeglad",
       "features": "Funkcje",
       "docs": "Dokumentacja"
+    },
+    "themeToggle": {
+      "label": "Motyw",
+      "light": "Tryb jasny",
+      "dark": "Tryb ciemny",
+      "switchTo": {
+        "light": "Przelacz na tryb jasny",
+        "dark": "Przelacz na tryb ciemny"
+      }
     }
   }
 }
