@@ -1,11 +1,11 @@
-# 📄 ARCHITECTURE.md
+﻿# ARCHITECTURE.md
 
 ## 1. Overview
 
-This repository (**ng-ultimate-base**) is a **template Angular project** that provides a ready-to-use foundation for new applications.  
-It contains a preconfigured architecture, opinionated folder structure, and basic tooling (linting, formatting, CI/CD, VSCode setup).
+This repository (**ng-ultimate-base**) is a template Angular project that provides a ready-to-use foundation for new applications.
+It contains a preconfigured architecture, opinionated folder structure, and tooling (linting, formatting, CI/CD, VS Code setup).
 
-**Goal:** reduce project setup time → clone, install, and start coding features.
+Goal: reduce project setup time -- clone, install, and start building features.
 
 ---
 
@@ -13,31 +13,28 @@ It contains a preconfigured architecture, opinionated folder structure, and basi
 
 ```text
 src/
- └── app/
-     ├── core/             # cross-cutting concerns (services, interceptors, config)
-     │   ├── interceptors/
-     │   ├── constants/
-     │   ├── models/
-     │   ├── services/
-     │   └── store/
-     │
-     ├── shared/           # reusable building blocks
-     │   ├── components/   # e.g. common-button, common-card
-     │   ├── directives/
-     │   ├── pipes/
-     │   └── models/
-     │
-     ├── features/         # domain-specific features
-     │   └── demo/         # example feature
-     │
-     └── app.component.*   # root bootstrap component
+  app/
+    core/              # cross-cutting concerns (services, interceptors, config)
+      interceptors/
+      constants/
+      models/
+      services/
+      store/
+    shared/            # reusable building blocks
+      components/      # e.g. common-button, common-card
+      directives/
+      pipes/
+      models/
+    features/          # domain-specific areas
+      demo/            # example feature
+    app.component.*    # root bootstrap component
 ```
 
 Other important folders:
 
-- `src/assets/i18n/` → language JSON files (`en.json`, `pl.json`, etc.).
-- `src/environments/` → environment configs (`environment.ts`, `environment.prod.ts`).
-- `dist/` → build output (ignored in Git).
+- `src/assets/i18n/` -- language JSON files (`en.json`, `pl.json`, etc.)
+- `src/environments/` -- environment configs (`environment.ts`, `environment.prod.ts`)
+- `dist/` -- build output (ignored in Git)
 
 ---
 
@@ -45,11 +42,11 @@ Other important folders:
 
 Contains functionality shared across the whole app:
 
-- **Configuration & init** → root providers, app config.
-- **ThemeService** → light/dark theme switching via CSS variables.
-- **StorageService** → wrapper for local/session storage.
-- **LanguageService** → wrapper fort service @ngx-translate based on browser language
-- **ToastService** → wrapper for ToastR with build-in translates
+- Configuration and bootstrap providers
+- `ThemeService` for light/dark theme switching via CSS variables
+- `StorageService` for local and session storage with fallbacks
+- `LanguageService` for ngx-translate initialization
+- `ToastService` for translated toast notifications
 
 ---
 
@@ -57,10 +54,10 @@ Contains functionality shared across the whole app:
 
 Reusable utilities and UI elements:
 
-- **Components** → small building blocks (`common-button`, `common-card`).
-- **Directives** → cross-cutting DOM logic (e.g. autofocus).
-- **Pipes** → formatters (e.g. date, currency).
-- **Models** → shared TypeScript interfaces/DTOs.
+- Components -- small building blocks (`common-button`, `common-card`)
+- Directives -- cross-cutting DOM logic (for example an autofocus directive)
+- Pipes -- formatters (dates, currency, transforms)
+- Models -- shared TypeScript interfaces and DTOs
 
 ---
 
@@ -68,82 +65,82 @@ Reusable utilities and UI elements:
 
 Each feature lives in its own folder:
 
-- Contains: components, feature-specific Signal Store, services, models.
-- Designed to be **standalone** (lazy-loadable).
+- Contains components, feature-specific Signal Store, services, and models
+- Designed to be self-contained and lazy load friendly
 
-Template includes an **example feature (`demo/`)** that demonstrates:
+The template includes a `demo/` feature that demonstrates:
 
-- Fetching data from a public API,
-- Managing state with a Signal Store,
-- Saving to local/session storage,
-- Reacting to theme changes.
+- Fetching data from a public API
+- Managing state with a Signal Store
+- Saving to local and session storage
+- Reacting to theme changes and showing translated toasts
 
 ---
 
 ## 6. Internationalization (i18n)
 
-- Language files: `src/assets/i18n/{lang}.json`.
-- Auto-detect language via `navigator.language`.
-- Default fallback: **English**.
-- Integrated with Angular pipes for usage inside templates.
+- Language files live under `src/assets/i18n/{lang}.json`
+- Auto-detects a language via `navigator.language`
+- English is the fallback locale
+- Integrated with Angular pipes for use inside templates
 
 ---
 
-## 7. Styling & UI
+## 7. Styling and UI
 
-- **Angular Material** → base component library & design tokens.
-- **Tailwind CSS** → utility-first styling & layout.
-- **Light/Dark mode** → powered by CSS variables (`--var`) + `ThemeService`.
+- Angular Material provides the component library and design tokens
+- Tailwind CSS supplies utility-first styling
+- Light and dark modes are powered by CSS variables (`--var`) and `ThemeService`
 
 ---
 
 ## 8. Testing
 
-- **Unit tests** → Karma/Jasmine by default (can be swapped to Jest/Vitest).
-- Template provides example:
-  - A component test,
-  - A service test (HTTP).
+- Unit tests use Karma and Jasmine by default (swap to Jest or Vitest if preferred)
+- Template includes examples for a component and a service test
 
 ---
 
 ## 9. Configuration
 
-- **Environments** → `dev` and `prod` (switch via Angular CLI file replacements).
-- **Linting & formatting** → ESLint + Prettier (aligned).
-- **Husky + lint-staged** → enforce lint/format on commit.
-- **VSCode setup** → included `.vscode` folder (settings, tasks, launch, extensions).
+- Environments: `dev` and `prod` via Angular CLI file replacements
+- ESLint and Prettier aligned for linting and formatting
+- Husky and lint-staged enforce checks before each commit
+- `.vscode` folder ships workspace settings, tasks, launch config, and recommended extensions
 
 ---
 
 ## 10. CI/CD
 
-- **CI (Continuous Integration)**
-  - Trigger: Pull Request → `develop`.
-  - Runs lint, unit tests, production build.
-  - Uploads build artifact for review.
+### Continuous Integration
 
-- **CD (Continuous Delivery/Release)**
-  - Trigger: manual (`workflow_dispatch`) with version input (`X.Y.Z`).
-  - Creates release branch `release/X.Y.Z`,
-  - Tags commit `vX.Y.Z`,
-  - Builds production bundle,
-  - Publishes GitHub Release with artifact `.zip`.
+- Trigger: pull request to `develop`
+- Runs lint, unit tests, and production build
+- Uploads build artifact for review
+
+### Continuous Delivery / Release
+
+- Trigger: manual (`workflow_dispatch`) with version input `X.Y.Z`
+- Creates release branch `release/X.Y.Z`
+- Tags commit `vX.Y.Z`
+- Builds production bundle
+- Publishes GitHub Release with the artifact `.zip`
 
 ---
 
 ## 11. Contribution Workflow
 
-- Development happens on `develop` branch.
-- New features: create a feature branch → open PR into `develop`.
-- Releases: run Release workflow → creates `release/*` branch + tag + Release.
-- Branch protection: `develop` and `release/*` require PR + status checks.
+- Development happens on the `develop` branch
+- Create feature branches from `develop` and open PRs back into `develop`
+- Run the release workflow to cut a `release/*` branch and publish a tag
+- Protect `develop` and `release/*` with PR reviews and required status checks
 
 ---
 
 ## 12. How to Extend
 
-- Add new **features** under `src/app/features/`.
-- Add new **services** in `core/services/`.
-- Add reusable **UI** under `shared/components/`.
-- Extend i18n by adding `{lang}.json` files in `assets/i18n/`.
-- Extend CI/CD pipelines if deploying to hosting platforms (e.g. Vercel, Netlify, Firebase).
+- Add new features under `src/app/features/`
+- Add cross-cutting services in `core/services/`
+- Expand reusable UI under `shared/components/`
+- Extend i18n by adding `{lang}.json` files in `assets/i18n/`
+- Extend CI/CD pipelines if you deploy to hosting platforms such as Vercel, Netlify, or Firebase
