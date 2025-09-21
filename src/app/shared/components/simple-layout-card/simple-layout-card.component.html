@@ -1,0 +1,21 @@
+﻿<section
+  class="rounded-2xl border border-[color:var(--var-border)] bg-[color:var(--var-surface)] p-6 shadow-sm transition-colors"
+>
+  <div class="flex flex-col gap-6">
+    <div class="flex flex-wrap items-start justify-between gap-4" *ngIf="title || description">
+      <div class="space-y-1">
+        <h2 *ngIf="title" class="text-xl font-semibold text-[color:var(--var-text-primary)]">
+          {{ title }}
+        </h2>
+        <p *ngIf="description" class="text-sm text-[color:var(--var-text-secondary)]">
+          {{ description }}
+        </p>
+      </div>
+      <ng-content select="[layout-card-actions]"></ng-content>
+    </div>
+
+    <div class="space-y-4">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</section>

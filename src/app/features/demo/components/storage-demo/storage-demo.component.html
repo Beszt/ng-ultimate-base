@@ -1,0 +1,141 @@
+<div class="space-y-6">
+  <p
+    class="rounded-lg bg-[color:var(--var-surface-subtle)] p-4 text-sm text-[color:var(--var-text-secondary)]"
+  >
+    {{ 'DEMO.storage.explainer' | translate }}
+  </p>
+
+  <div class="grid gap-6 md:grid-cols-2">
+    <section
+      class="space-y-4 rounded-xl border border-[color:var(--var-border)] bg-[color:var(--var-surface)] p-5 shadow-sm transition-colors"
+    >
+      <div class="flex items-center justify-between gap-3">
+        <h3 class="text-lg font-semibold text-[color:var(--var-text-primary)]">
+          {{ 'DEMO.storage.local.title' | translate }}
+        </h3>
+        <span
+          class="text-xs font-semibold tracking-wide uppercase"
+          [ngClass]="{
+            'text-[color:var(--var-success)]': availability().local,
+            'text-[color:var(--var-accent)]': !availability().local
+          }"
+        >
+          {{ availability().local ? ('DEMO.storage.status.available' | translate) :
+          ('DEMO.storage.status.unavailable' | translate) }}
+        </span>
+      </div>
+
+      <label class="flex flex-col gap-2 text-sm font-medium text-[color:var(--var-text-secondary)]">
+        {{ 'DEMO.storage.label' | translate }}
+        <input
+          type="text"
+          class="rounded-md border border-[color:var(--var-border)] bg-[color:var(--var-surface)] px-3 py-2 text-sm text-[color:var(--var-text-primary)] shadow-sm transition focus:border-[color:var(--var-primary)] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
+          [value]="localDraft()"
+          (input)="onLocalInput($any($event.target).value)"
+          [attr.aria-label]="'DEMO.storage.local.title' | translate"
+        />
+      </label>
+
+      <div
+        class="space-y-2 rounded-md border border-dashed border-[color:var(--var-border)] bg-[color:var(--var-surface-subtle)] p-3"
+      >
+        <span
+          class="text-xs font-semibold tracking-wide text-[color:var(--var-text-secondary)] uppercase"
+        >
+          {{ 'DEMO.storage.currentValue' | translate }}
+        </span>
+        <p class="text-sm break-words text-[color:var(--var-text-primary)]">
+          {{ localValue() ?? ('DEMO.storage.empty' | translate) }}
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <button
+          type="button"
+          class="inline-flex items-center rounded-md bg-[color:var(--var-primary)] px-3 py-2 text-sm font-semibold text-[color:var(--var-primary-contrast)] shadow-sm transition hover:bg-[color:var(--var-primary)]/90 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
+          (click)="saveLocal()"
+        >
+          {{ 'DEMO.storage.actions.save' | translate }}
+        </button>
+        <button
+          type="button"
+          class="inline-flex items-center rounded-md bg-[color:var(--var-surface-subtle)] px-3 py-2 text-sm font-semibold text-[color:var(--var-text-primary)] transition hover:bg-[color:var(--var-surface)] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
+          (click)="clearLocal()"
+          [disabled]="localValue() === null && !localDraft()"
+        >
+          {{ 'DEMO.storage.actions.clear' | translate }}
+        </button>
+      </div>
+    </section>
+
+    <section
+      class="space-y-4 rounded-xl border border-[color:var(--var-border)] bg-[color:var(--var-surface)] p-5 shadow-sm transition-colors"
+    >
+      <div class="flex items-center justify-between gap-3">
+        <h3 class="text-lg font-semibold text-[color:var(--var-text-primary)]">
+          {{ 'DEMO.storage.session.title' | translate }}
+        </h3>
+        <span
+          class="text-xs font-semibold tracking-wide uppercase"
+          [ngClass]="{
+            'text-[color:var(--var-success)]': availability().session,
+            'text-[color:var(--var-accent)]': !availability().session
+          }"
+        >
+          {{ availability().session ? ('DEMO.storage.status.available' | translate) :
+          ('DEMO.storage.status.unavailable' | translate) }}
+        </span>
+      </div>
+
+      <label class="flex flex-col gap-2 text-sm font-medium text-[color:var(--var-text-secondary)]">
+        {{ 'DEMO.storage.label' | translate }}
+        <input
+          type="text"
+          class="rounded-md border border-[color:var(--var-border)] bg-[color:var(--var-surface)] px-3 py-2 text-sm text-[color:var(--var-text-primary)] shadow-sm transition focus:border-[color:var(--var-primary)] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
+          [value]="sessionDraft()"
+          (input)="onSessionInput($any($event.target).value)"
+          [attr.aria-label]="'DEMO.storage.session.title' | translate"
+        />
+      </label>
+
+      <div
+        class="space-y-2 rounded-md border border-dashed border-[color:var(--var-border)] bg-[color:var(--var-surface-subtle)] p-3"
+      >
+        <span
+          class="text-xs font-semibold tracking-wide text-[color:var(--var-text-secondary)] uppercase"
+        >
+          {{ 'DEMO.storage.currentValue' | translate }}
+        </span>
+        <p class="text-sm break-words text-[color:var(--var-text-primary)]">
+          {{ sessionValue() ?? ('DEMO.storage.empty' | translate) }}
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <button
+          type="button"
+          class="inline-flex items-center rounded-md bg-[color:var(--var-primary)] px-3 py-2 text-sm font-semibold text-[color:var(--var-primary-contrast)] shadow-sm transition hover:bg-[color:var(--var-primary)]/90 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
+          (click)="saveSession()"
+        >
+          {{ 'DEMO.storage.actions.save' | translate }}
+        </button>
+        <button
+          type="button"
+          class="inline-flex items-center rounded-md bg-[color:var(--var-surface-subtle)] px-3 py-2 text-sm font-semibold text-[color:var(--var-text-primary)] transition hover:bg-[color:var(--var-surface)] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
+          (click)="clearSession()"
+          [disabled]="sessionValue() === null && !sessionDraft()"
+        >
+          {{ 'DEMO.storage.actions.clear' | translate }}
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div
+    class="rounded-lg border border-[color:var(--var-border)] bg-[color:var(--var-surface-subtle)] px-4 py-3 text-xs text-[color:var(--var-text-secondary)]"
+    *ngIf="lastUpdatedScope() as scope"
+  >
+    {{ 'DEMO.storage.lastUpdated' | translate:{ scope: ('DEMO.storage.scope.' + scope) | translate,
+    time: (lastUpdatedAt() | date: 'mediumTime') } }}
+  </div>
+</div>
