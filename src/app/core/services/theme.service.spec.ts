@@ -1,4 +1,3 @@
-﻿/* eslint-disable @typescript-eslint/unbound-method */
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 
@@ -65,7 +64,8 @@ describe('ThemeService', () => {
     storage.getLocal.and.returnValue(null);
 
     mediaQuery = new MockMediaQueryList(false);
-    originalMatchMedia = window.matchMedia;
+    originalMatchMedia =
+      typeof window.matchMedia === 'function' ? window.matchMedia.bind(window) : undefined;
     (window as typeof window & { matchMedia?: (query: string) => MediaQueryList }).matchMedia =
       jasmine.createSpy('matchMedia').and.returnValue(mediaQuery as unknown as MediaQueryList);
 
@@ -112,7 +112,7 @@ describe('ThemeService', () => {
     expect(documentElement.classList.contains('dark')).toBeTrue();
     expect(service.theme()).toBe('dark');
     expect(service.isSystemPreferenceActive()).toBeFalse();
-    expect(storage.setLocal).not.toHaveBeenCalled();
+    expect(storage.setLocal.calls.count()).toBe(0);
   });
 
   it('falls back to the system theme when no stored preference exists', () => {
@@ -133,7 +133,7 @@ describe('ThemeService', () => {
     const next = service.toggleTheme();
 
     expect(next).toBe('light');
-    expect(storage.setLocal).toHaveBeenCalledWith('demo.theme', 'light');
+    expect(storage.setLocal.calls.argsFor(0)).toEqual(['demo.theme', 'light']);
     expect(service.isSystemPreferenceActive()).toBeFalse();
     expect(documentElement.dataset['theme']).toBe('light');
     expect(documentElement.classList.contains('dark')).toBeFalse();
@@ -159,7 +159,7 @@ describe('ThemeService', () => {
     const theme = service.useSystemPreference();
 
     expect(theme).toBe('light');
-    expect(storage.removeLocal).toHaveBeenCalledWith('demo.theme');
+    expect(storage.removeLocal.calls.argsFor(0)).toEqual(['demo.theme']);
     expect(service.isSystemPreferenceActive()).toBeTrue();
     expect(documentElement.dataset['theme']).toBe('light');
 

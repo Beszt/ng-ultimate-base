@@ -1,7 +1,5 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-import type { Signal } from '@angular/core';
-import { signal } from '@angular/core';
 import {
   TranslateFakeLoader,
   TranslateLoader,
@@ -9,90 +7,36 @@ import {
   TranslateService,
 } from '@ngx-translate/core';
 
-import type { StorageScope } from '../../../../core/services/storage.service';
-import { StorageStore } from '../../../../core/store/storage.store';
+import { appStorageKey } from '../../../../core/config/app-config.token';
+import type { StorageScope } from '../../../../core/models/storage-scope.model';
+import { StorageService } from '../../../../core/services/storage.service';
 import { StorageDemoComponent } from './storage-demo.component';
-
-class StorageStoreStub {
-  readonly localValue: Signal<string | null>;
-
-  readonly sessionValue: Signal<string | null>;
-
-  readonly availability: Signal<Record<StorageScope, boolean>>;
-
-  readonly lastUpdatedScope: Signal<StorageScope | null>;
-
-  readonly lastUpdatedAt: Signal<number | null>;
-
-  readonly hydrate = jasmine.createSpy('hydrate');
-
-  readonly saveLocal = jasmine.createSpy('saveLocal').and.callFake((value: string) => {
-    this.localSignal.set(value);
-    this.setAvailability('local', true);
-    this.setLastUpdated('local', Date.now());
-  });
-
-  readonly saveSession = jasmine.createSpy('saveSession').and.callFake((value: string) => {
-    this.sessionSignal.set(value);
-    this.setAvailability('session', true);
-    this.setLastUpdated('session', Date.now());
-  });
-
-  readonly clearLocal = jasmine.createSpy('clearLocal').and.callFake(() => {
-    this.localSignal.set(null);
-    this.setLastUpdated('local', Date.now());
-  });
-
-  readonly clearSession = jasmine.createSpy('clearSession').and.callFake(() => {
-    this.sessionSignal.set(null);
-    this.setLastUpdated('session', Date.now());
-  });
-
-  private readonly localSignal = signal<string | null>(null);
-
-  private readonly sessionSignal = signal<string | null>(null);
-
-  private readonly availabilitySignal = signal<Record<StorageScope, boolean>>({
-    local: true,
-    session: true,
-  });
-
-  private readonly lastScopeSignal = signal<StorageScope | null>(null);
-
-  private readonly lastAtSignal = signal<number | null>(null);
-
-  constructor() {
-    this.localValue = this.localSignal.asReadonly();
-    this.sessionValue = this.sessionSignal.asReadonly();
-    this.availability = this.availabilitySignal.asReadonly();
-    this.lastUpdatedScope = this.lastScopeSignal.asReadonly();
-    this.lastUpdatedAt = this.lastAtSignal.asReadonly();
-  }
-
-  setLocalValue(value: string | null): void {
-    this.localSignal.set(value);
-  }
-
-  setSessionValue(value: string | null): void {
-    this.sessionSignal.set(value);
-  }
-
-  setAvailability(scope: StorageScope, isAvailable: boolean): void {
-    this.availabilitySignal.update((current) => ({ ...current, [scope]: isAvailable }));
-  }
-
-  setLastUpdated(scope: StorageScope | null, timestamp: number | null): void {
-    this.lastScopeSignal.set(scope);
-    this.lastAtSignal.set(timestamp);
-  }
-}
 
 describe('StorageDemoComponent', () => {
   let fixture: ComponentFixture<StorageDemoComponent>;
-  let store: StorageStoreStub;
+  let storage: jasmine.SpyObj<StorageService>;
+
+  const localKey = appStorageKey('localNote');
+  const sessionKey = appStorageKey('sessionNote');
 
   beforeEach(async () => {
-    store = new StorageStoreStub();
+    storage = jasmine.createSpyObj<StorageService>('StorageService', [
+      'isAvailable',
+      'getLocal',
+      'getSession',
+      'setLocal',
+      'setSession',
+      'removeLocal',
+      'removeSession',
+    ]);
+
+    storage.isAvailable.and.callFake((scope: StorageScope = 'local') => scope !== undefined);
+    storage.getLocal.and.returnValue(null);
+    storage.getSession.and.returnValue(null);
+    storage.setLocal.and.stub();
+    storage.setSession.and.stub();
+    storage.removeLocal.and.stub();
+    storage.removeSession.and.stub();
 
     await TestBed.configureTestingModule({
       imports: [
@@ -101,36 +45,38 @@ describe('StorageDemoComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
         }),
       ],
-      providers: [{ provide: StorageStore, useValue: store }],
+      providers: [{ provide: StorageService, useValue: storage }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(StorageDemoComponent);
 
     const translate = TestBed.inject(TranslateService);
     translate.use('en');
-
-    fixture.detectChanges();
   });
 
-  it('calls hydrate on init', () => {
-    expect(store.hydrate).toHaveBeenCalled();
-  });
+  it('hydrates values on init', () => {
+    storage.isAvailable.and.callFake((scope: StorageScope = 'local') => scope === 'local');
+    storage.getLocal.and.returnValue('Local note');
+    storage.getSession.and.returnValue('Session note');
 
-  it('mirrors values coming from the store in the template', () => {
-    store.setLocalValue('Local note');
-    store.setSessionValue('Session note');
     fixture.detectChanges();
+
+    expect(storage.isAvailable.calls.allArgs()).toEqual([['local'], ['session']]);
+    expect(storage.getLocal.calls.argsFor(0)).toEqual([localKey]);
+    expect(storage.getSession.calls.count()).toBe(0);
 
     const [localSection, sessionSection] = getSections(fixture);
 
     const localValue = getText(localSection.querySelector('.break-words'));
-    const sessionValue = getText(sessionSection.querySelector('.break-words'));
+    const sessionStatus = getText(sessionSection.querySelector('span.text-xs'));
 
     expect(localValue).toContain('Local note');
-    expect(sessionValue).toContain('Session note');
+    expect(sessionStatus).toContain('unavailable');
   });
 
-  it('delegates saving actions to the store', () => {
+  it('saves local drafts via the storage service', () => {
+    fixture.detectChanges();
+
     const [localSection] = getSections(fixture);
     const input = localSection.querySelector('input');
     const buttons = localSection.querySelectorAll<HTMLButtonElement>('button');
@@ -143,23 +89,39 @@ describe('StorageDemoComponent', () => {
     fixture.detectChanges();
 
     saveButton.click();
+    fixture.detectChanges();
 
-    expect(store.saveLocal).toHaveBeenCalledWith('Draft value');
+    expect(storage.setLocal.calls.argsFor(0)).toEqual([localKey, 'Draft value']);
+
+    const localValue = getText(localSection.querySelector('.break-words'));
+    expect(localValue).toContain('Draft value');
   });
 
-  it('delegates clearing actions to the store', () => {
-    store.setSessionValue('Session note');
+  it('clears session drafts via the storage service', () => {
     fixture.detectChanges();
 
     const [, sessionSection] = getSections(fixture);
+    const input = sessionSection.querySelector('input');
     const buttons = sessionSection.querySelectorAll<HTMLButtonElement>('button');
+    const saveButton = buttons.item(0);
     const clearButton = buttons.item(1);
+
+    expect(input).not.toBeNull();
+    const typedInput = input as HTMLInputElement;
+    typedInput.value = 'Session note';
+    typedInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    saveButton.click();
+    fixture.detectChanges();
 
     expect(clearButton.disabled).toBeFalse();
 
     clearButton.click();
+    fixture.detectChanges();
 
-    expect(store.clearSession).toHaveBeenCalled();
+    expect(storage.removeSession.calls.argsFor(0)).toEqual([sessionKey]);
+    expect(clearButton.disabled).toBeTrue();
   });
 });
 

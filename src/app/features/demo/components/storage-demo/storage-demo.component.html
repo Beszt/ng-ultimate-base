@@ -1,4 +1,4 @@
-﻿<div class="space-y-6">
+<div class="space-y-6">
   <p
     class="rounded-lg bg-[color:var(--var-surface-subtle)] p-4 text-sm text-[color:var(--var-text-secondary)]"
   >
@@ -16,11 +16,11 @@
         <span
           class="text-xs font-semibold tracking-wide uppercase"
           [ngClass]="{
-            'text-[color:var(--var-success)]': store.availability().local,
-            'text-[color:var(--var-accent)]': !store.availability().local
+            'text-[color:var(--var-success)]': availability().local,
+            'text-[color:var(--var-accent)]': !availability().local
           }"
         >
-          {{ store.availability().local ? ('DEMO.storage.status.available' | translate) :
+          {{ availability().local ? ('DEMO.storage.status.available' | translate) :
           ('DEMO.storage.status.unavailable' | translate) }}
         </span>
       </div>
@@ -45,7 +45,7 @@
           {{ 'DEMO.storage.currentValue' | translate }}
         </span>
         <p class="text-sm break-words text-[color:var(--var-text-primary)]">
-          {{ store.localValue() ?? ('DEMO.storage.empty' | translate) }}
+          {{ localValue() ?? ('DEMO.storage.empty' | translate) }}
         </p>
       </div>
 
@@ -61,7 +61,7 @@
           type="button"
           class="inline-flex items-center rounded-md bg-[color:var(--var-surface-subtle)] px-3 py-2 text-sm font-semibold text-[color:var(--var-text-primary)] transition hover:bg-[color:var(--var-surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
           (click)="clearLocal()"
-          [disabled]="store.localValue() === null && !localDraft()"
+          [disabled]="localValue() === null && !localDraft()"
         >
           {{ 'DEMO.storage.actions.clear' | translate }}
         </button>
@@ -78,11 +78,11 @@
         <span
           class="text-xs font-semibold tracking-wide uppercase"
           [ngClass]="{
-            'text-[color:var(--var-success)]': store.availability().session,
-            'text-[color:var(--var-accent)]': !store.availability().session
+            'text-[color:var(--var-success)]': availability().session,
+            'text-[color:var(--var-accent)]': !availability().session
           }"
         >
-          {{ store.availability().session ? ('DEMO.storage.status.available' | translate) :
+          {{ availability().session ? ('DEMO.storage.status.available' | translate) :
           ('DEMO.storage.status.unavailable' | translate) }}
         </span>
       </div>
@@ -107,7 +107,7 @@
           {{ 'DEMO.storage.currentValue' | translate }}
         </span>
         <p class="text-sm break-words text-[color:var(--var-text-primary)]">
-          {{ store.sessionValue() ?? ('DEMO.storage.empty' | translate) }}
+          {{ sessionValue() ?? ('DEMO.storage.empty' | translate) }}
         </p>
       </div>
 
@@ -123,7 +123,7 @@
           type="button"
           class="inline-flex items-center rounded-md bg-[color:var(--var-surface-subtle)] px-3 py-2 text-sm font-semibold text-[color:var(--var-text-primary)] transition hover:bg-[color:var(--var-surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
           (click)="clearSession()"
-          [disabled]="store.sessionValue() === null && !sessionDraft()"
+          [disabled]="sessionValue() === null && !sessionDraft()"
         >
           {{ 'DEMO.storage.actions.clear' | translate }}
         </button>
@@ -133,9 +133,9 @@
 
   <div
     class="rounded-lg border border-[color:var(--var-border)] bg-[color:var(--var-surface-subtle)] px-4 py-3 text-xs text-[color:var(--var-text-secondary)]"
-    *ngIf="store.lastUpdatedScope() as scope"
+    *ngIf="lastUpdatedScope() as scope"
   >
     {{ 'DEMO.storage.lastUpdated' | translate:{ scope: ('DEMO.storage.scope.' + scope) | translate,
-    time: (store.lastUpdatedAt() | date: 'mediumTime') } }}
+    time: (lastUpdatedAt() | date: 'mediumTime') } }}
   </div>
 </div>

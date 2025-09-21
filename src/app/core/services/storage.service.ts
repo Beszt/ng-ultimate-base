@@ -1,17 +1,11 @@
 import { Injectable } from '@angular/core';
-
-export type StorageScope = 'local' | 'session';
+import type { StorageScope } from '../models/storage-scope.model';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
   private readonly fallback = new Map<StorageScope, Map<string, string>>();
   private readonly trackedKeys = new Map<StorageScope, Set<string>>();
   private readonly storageCache = new Map<StorageScope, Storage | null>();
-
-  init(): void {
-    this.ensureStorage('local');
-    this.ensureStorage('session');
-  }
 
   set<T>(key: string, value: T, scope: StorageScope = 'local'): void {
     if (!key) {
@@ -24,17 +18,11 @@ export class StorageService {
       return;
     }
 
-    const storage = this.ensureStorage(scope);
-    let persisted = false;
-
-    if (storage) {
-      try {
+    const persisted =
+      this.withStorage(scope, (storage) => {
         storage.setItem(key, serialized);
-        persisted = true;
-      } catch {
-        this.storageCache.set(scope, null);
-      }
-    }
+        return true;
+      }) ?? false;
 
     if (!persisted) {
       this.fallbackStore(scope).set(key, serialized);
@@ -58,27 +46,14 @@ export class StorageService {
       return null;
     }
 
-    const storage = this.ensureStorage(scope);
-    let raw: string | null | undefined;
+    const raw = this.withStorage(scope, (storage) => storage.getItem(key));
+    const resolved = raw ?? this.fallbackStore(scope).get(key);
 
-    if (storage) {
-      try {
-        raw = storage.getItem(key);
-      } catch {
-        this.storageCache.set(scope, null);
-        raw = undefined;
-      }
-    }
-
-    if (raw === null || raw === undefined) {
-      raw = this.fallbackStore(scope).get(key);
-    }
-
-    if (raw === undefined || raw === null) {
+    if (resolved === undefined || resolved === null) {
       return null;
     }
 
-    return this.parse<T>(raw);
+    return this.parse<T>(resolved);
   }
 
   getLocal<T>(key: string): T | null {
@@ -94,14 +69,9 @@ export class StorageService {
       return;
     }
 
-    const storage = this.ensureStorage(scope);
-    if (storage) {
-      try {
-        storage.removeItem(key);
-      } catch {
-        this.storageCache.set(scope, null);
-      }
-    }
+    this.withStorage(scope, (storage) => {
+      storage.removeItem(key);
+    });
 
     this.fallbackStore(scope).delete(key);
     this.untrackKey(scope, key);
@@ -224,6 +194,20 @@ export class StorageService {
       return JSON.parse(raw) as T;
     } catch {
       return raw as unknown as T;
+    }
+  }
+
+  private withStorage<T>(scope: StorageScope, attempt: (storage: Storage) => T): T | undefined {
+    const storage = this.ensureStorage(scope);
+    if (!storage) {
+      return undefined;
+    }
+
+    try {
+      return attempt(storage);
+    } catch {
+      this.storageCache.set(scope, null);
+      return undefined;
     }
   }
 }

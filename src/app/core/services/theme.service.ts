@@ -1,7 +1,6 @@
-﻿/* eslint-disable @typescript-eslint/member-ordering */
 import { DOCUMENT } from '@angular/common';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import type { OnDestroy } from '@angular/core';
+import type { OnDestroy, Signal, WritableSignal } from '@angular/core';
 
 import { appStorageKey } from '../config/app-config.token';
 import type { ThemeName } from '../models/theme-name.model';
@@ -12,20 +11,28 @@ const DARK_VARIANT_CLASS = 'dark';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService implements OnDestroy {
-  private readonly themeSignal = signal<ThemeName>('light');
-  private readonly followSystem = signal(true);
-
-  readonly theme = this.themeSignal.asReadonly();
-  readonly isDark = computed(() => this.themeSignal() === 'dark');
+  readonly theme: Signal<ThemeName>;
+  readonly isDark: Signal<boolean>;
   readonly availableThemes: ReadonlyArray<ThemeName> = ['light', 'dark'];
-  readonly isSystemPreferenceActive = this.followSystem.asReadonly();
+  readonly isSystemPreferenceActive: Signal<boolean>;
 
+  private readonly themeSignal: WritableSignal<ThemeName>;
+  private readonly followSystem: WritableSignal<boolean>;
   private readonly documentRef = inject(DOCUMENT);
   private readonly storage = inject(StorageService);
   private readonly prefersDarkQuery = this.resolvePrefersDarkQuery();
 
   private readonly cleanup: Array<() => void> = [];
   private registeredSystemListener = false;
+
+  constructor() {
+    this.themeSignal = signal<ThemeName>('light');
+    this.followSystem = signal(true);
+
+    this.theme = this.themeSignal.asReadonly();
+    this.isDark = computed(() => this.themeSignal() === 'dark');
+    this.isSystemPreferenceActive = this.followSystem.asReadonly();
+  }
 
   init(): void {
     const stored = this.restoreStoredTheme();

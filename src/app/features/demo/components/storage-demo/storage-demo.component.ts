@@ -1,9 +1,14 @@
 import { CommonModule } from '@angular/common';
-import type { OnInit } from '@angular/core';
+import type { OnInit, Signal, WritableSignal } from '@angular/core';
 import { Component, Injector, effect, inject, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { StorageStore } from '../../../../core/store/storage.store';
+import { appStorageKey } from '../../../../core/config/app-config.token';
+import type { StorageScope } from '../../../../core/models/storage-scope.model';
+import { StorageService } from '../../../../core/services/storage.service';
+
+const LOCAL_NOTE_KEY = appStorageKey('localNote');
+const SESSION_NOTE_KEY = appStorageKey('sessionNote');
 
 @Component({
   selector: 'app-storage-demo',
@@ -13,15 +18,49 @@ import { StorageStore } from '../../../../core/store/storage.store';
   styleUrls: ['./storage-demo.component.scss'],
 })
 export class StorageDemoComponent implements OnInit {
-  readonly localDraft = signal('');
-  readonly sessionDraft = signal('');
+  readonly availability: Signal<Record<StorageScope, boolean>>;
+  readonly localValue: Signal<string | null>;
+  readonly sessionValue: Signal<string | null>;
+  readonly lastUpdatedScope: Signal<StorageScope | null>;
+  readonly lastUpdatedAt: Signal<number | null>;
+  readonly localDraft: WritableSignal<string>;
+  readonly sessionDraft: WritableSignal<string>;
 
-  readonly store = inject(StorageStore);
-  private readonly injector = inject(Injector);
+  private readonly availabilitySignal: WritableSignal<Record<StorageScope, boolean>>;
+  private readonly localValueSignal: WritableSignal<string | null>;
+  private readonly sessionValueSignal: WritableSignal<string | null>;
+  private readonly lastUpdatedScopeSignal: WritableSignal<StorageScope | null>;
+  private readonly lastUpdatedAtSignal: WritableSignal<number | null>;
+
+  private readonly storage: StorageService;
+  private readonly injector: Injector;
+
+  constructor() {
+    this.storage = inject(StorageService);
+    this.injector = inject(Injector);
+
+    this.availabilitySignal = signal<Record<StorageScope, boolean>>({
+      local: false,
+      session: false,
+    });
+    this.localValueSignal = signal<string | null>(null);
+    this.sessionValueSignal = signal<string | null>(null);
+    this.lastUpdatedScopeSignal = signal<StorageScope | null>(null);
+    this.lastUpdatedAtSignal = signal<number | null>(null);
+
+    this.localDraft = signal('');
+    this.sessionDraft = signal('');
+
+    this.availability = this.availabilitySignal.asReadonly();
+    this.localValue = this.localValueSignal.asReadonly();
+    this.sessionValue = this.sessionValueSignal.asReadonly();
+    this.lastUpdatedScope = this.lastUpdatedScopeSignal.asReadonly();
+    this.lastUpdatedAt = this.lastUpdatedAtSignal.asReadonly();
+  }
 
   ngOnInit(): void {
-    this.store.hydrate();
-    this.syncDraftsWithStore();
+    this.hydrate();
+    this.syncDraftsWithStorage();
   }
 
   onLocalInput(value: string): void {
@@ -33,25 +72,68 @@ export class StorageDemoComponent implements OnInit {
   }
 
   saveLocal(): void {
-    this.store.saveLocal(this.localDraft());
+    this.persistValue('local', this.localDraft());
   }
 
   saveSession(): void {
-    this.store.saveSession(this.sessionDraft());
+    this.persistValue('session', this.sessionDraft());
   }
 
   clearLocal(): void {
-    this.store.clearLocal();
+    this.clearValue('local');
   }
 
   clearSession(): void {
-    this.store.clearSession();
+    this.clearValue('session');
   }
 
-  private syncDraftsWithStore(): void {
+  private hydrate(): void {
+    const localAvailable = this.storage.isAvailable('local');
+    const sessionAvailable = this.storage.isAvailable('session');
+
+    this.availabilitySignal.set({ local: localAvailable, session: sessionAvailable });
+    this.localValueSignal.set(
+      localAvailable ? this.storage.getLocal<string>(LOCAL_NOTE_KEY) : null,
+    );
+    this.sessionValueSignal.set(
+      sessionAvailable ? this.storage.getSession<string>(SESSION_NOTE_KEY) : null,
+    );
+    this.lastUpdatedScopeSignal.set(null);
+    this.lastUpdatedAtSignal.set(null);
+  }
+
+  private persistValue(scope: StorageScope, value: string): void {
+    const key = this.resolveKey(scope);
+
+    if (scope === 'local') {
+      this.storage.setLocal(key, value);
+    } else {
+      this.storage.setSession(key, value);
+    }
+
+    this.setValue(scope, value);
+    this.updateAvailability(scope);
+    this.stamp(scope);
+  }
+
+  private clearValue(scope: StorageScope): void {
+    const key = this.resolveKey(scope);
+
+    if (scope === 'local') {
+      this.storage.removeLocal(key);
+    } else {
+      this.storage.removeSession(key);
+    }
+
+    this.setValue(scope, null);
+    this.updateAvailability(scope);
+    this.stamp(scope);
+  }
+
+  private syncDraftsWithStorage(): void {
     effect(
       () => {
-        const value = this.store.localValue();
+        const value = this.localValue();
         this.localDraft.set(value ?? '');
       },
       { injector: this.injector },
@@ -59,10 +141,34 @@ export class StorageDemoComponent implements OnInit {
 
     effect(
       () => {
-        const value = this.store.sessionValue();
+        const value = this.sessionValue();
         this.sessionDraft.set(value ?? '');
       },
       { injector: this.injector },
     );
+  }
+
+  private setValue(scope: StorageScope, value: string | null): void {
+    if (scope === 'local') {
+      this.localValueSignal.set(value);
+    } else {
+      this.sessionValueSignal.set(value);
+    }
+  }
+
+  private updateAvailability(scope: StorageScope): void {
+    this.availabilitySignal.update((current) => ({
+      ...current,
+      [scope]: this.storage.isAvailable(scope),
+    }));
+  }
+
+  private stamp(scope: StorageScope): void {
+    this.lastUpdatedScopeSignal.set(scope);
+    this.lastUpdatedAtSignal.set(Date.now());
+  }
+
+  private resolveKey(scope: StorageScope): string {
+    return scope === 'local' ? LOCAL_NOTE_KEY : SESSION_NOTE_KEY;
   }
 }

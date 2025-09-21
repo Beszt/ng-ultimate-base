@@ -15,7 +15,6 @@ import { provideToastr } from 'ngx-toastr';
 
 import { ThemeService } from './app/core/services/theme.service';
 import { LanguageService } from './app/core/services/language.service';
-import { StorageService } from './app/core/services/storage.service';
 import { AppComponent } from './app/app.component';
 import { routes } from './routes';
 import { httpErrorInterceptor } from './app/core/interceptors/http-error.interceptor';
@@ -43,6 +42,5 @@ bootstrapApplication(AppComponent, {
     ),
     provideAppInitializer(() => inject(ThemeService).init()),
     provideAppInitializer(() => inject(LanguageService).init()),
-    provideAppInitializer(() => inject(StorageService).init()),
   ],
 }).catch((err) => console.error(err));

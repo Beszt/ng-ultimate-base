@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
-import { StorageService, type StorageScope } from './storage.service';
+import { StorageService } from './storage.service';
+import type { StorageScope } from '../models/storage-scope.model';
 
 type StorageServicePrivateApi = {
   ensureStorage(scope: StorageScope): Storage | null;
