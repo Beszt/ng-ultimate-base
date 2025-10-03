@@ -1,4 +1,4 @@
-# ng-ultimate-base
+﻿# ng-ultimate-base
 
 A template Angular 20 project with Material UI, Tailwind CSS, Signals, i18n, ESLint, Prettier, Husky, and CI/CD. Designed to kickstart new apps with a clean architecture and ready-to-go developer experience.
 
@@ -32,9 +32,9 @@ A template Angular 20 project with Material UI, Tailwind CSS, Signals, i18n, ESL
 
 ### Services
 
-- `ConfigService`    Loads `/assets/settings.json` during bootstrap through an `APP_INITIALIZER`, exposes the values via the `APP_CONFIG` injection token, and provides helpers like `storageKey('suffix')` that respect the configured namespace.
+- `ConfigService` Loads `/assets/settings.json` during bootstrap through an `APP_INITIALIZER`, exposes the values via the `APP_CONFIG` injection token, and provides helpers like `storageKey('suffix')` that respect the configured namespace.
 
-- `ThemeService`    Provides light/dark themes, system preference detection, and persists the last choice. It is initialized through `provideAppInitializer` in `main.ts`, so the theme is ready before the first paint.
+- `ThemeService` Provides light/dark themes, system preference detection, and persists the last choice. It is initialized through `provideAppInitializer` in `main.ts`, so the theme is ready before the first paint.
 
   ```ts
   // Toggle or force a theme inside any component
@@ -43,7 +43,7 @@ A template Angular 20 project with Material UI, Tailwind CSS, Signals, i18n, ESL
   this.themeService.useSystemPreference();
   ```
 
-- `StorageService`    Wrapper around `localStorage` and `sessionStorage` with JSON serialization, graceful fallback when storage is blocked, and helpers for scoped clearing.
+- `StorageService` Wrapper around `localStorage` and `sessionStorage` with JSON serialization, graceful fallback when storage is blocked, and helpers for scoped clearing.
 
   ```ts
   this.storage.setLocal('auth-user', user);
@@ -51,9 +51,9 @@ A template Angular 20 project with Material UI, Tailwind CSS, Signals, i18n, ESL
   this.storage.clearSession();
   ```
 
-- `LanguageService`    Bootstraps the active language based on the browser locale and keeps `document.documentElement.lang` in sync. Extend translations under `src/assets/i18n`.
+- `LanguageService` Bootstraps the active language based on the browser locale and keeps `document.documentElement.lang` in sync. Extend translations under `src/assets/i18n`.
 
-- `ToastService`    Simplifies translated toast notifications. Provide translation keys and optional interpolation params.
+- `ToastService` Simplifies translated toast notifications. Provide translation keys and optional interpolation params.
 
   ```ts
   this.toast.showSuccess('demo.fetch.success', { count });
@@ -62,7 +62,7 @@ A template Angular 20 project with Material UI, Tailwind CSS, Signals, i18n, ESL
 
 ### Theming
 
-- Theme styles live in `src/styles/themes/light.scss` and `dark.scss`.    Extend design tokens or CSS variables there. Both files target `[data-theme="<name>"]` so additions work for light and dark variants.
+- Theme styles live in `src/styles/themes/light.scss` and `dark.scss`. Extend design tokens or CSS variables there. Both files target `[data-theme="<name>"]` so additions work for light and dark variants.
 - Global base styles are gathered in `src/styles/styles.scss`. Tailwind utilities are available through `tailwind.css`.
 - When adding a new theme name, update `ThemeService.availableThemes` and create a matching stylesheet.
 
@@ -95,15 +95,15 @@ Runtime settings are loaded at startup from `/assets/settings.json` (copied from
 
 ## Docker Deployment
 
-The repository ships a multi-stage `Dockerfile` (`node:20-alpine` -> `nginx:alpine`) that builds the Angular app and serves it through Nginx. At container start the entrypoint script rewrites `/usr/share/nginx/html/assets/settings.json` from environment variables so you can *build once, run anywhere*.
+The repository ships a multi-stage `Dockerfile` (`node:20-alpine` -> `nginx:alpine`) that builds the Angular app and serves it through Nginx. At container start the entrypoint script rewrites `/usr/share/nginx/html/assets/settings.json` from environment variables so you can _build once, run anywhere_.
 
 ### Runtime environment variables
 
-| Variable | Default | Description |
-| --- | --- | --- |
-| `APP_NAME` | `Demo Playground` | Display name exposed via `ConfigService.appConfig.name`. |
-| `APP_STORAGE_NAMESPACE` | `demo` | Prefix used for storage keys. Normalized (trimmed & trailing dot removed). |
-| `CONFIG_PATH` | `/usr/share/nginx/html/assets/settings.json` | Override only if the app is hosted from a different root. |
+| Variable                | Default                                      | Description                                                                |
+| ----------------------- | -------------------------------------------- | -------------------------------------------------------------------------- |
+| `APP_NAME`              | `Demo Playground`                            | Display name exposed via `ConfigService.appConfig.name`.                   |
+| `APP_STORAGE_NAMESPACE` | `demo`                                       | Prefix used for storage keys. Normalized (trimmed & trailing dot removed). |
+| `CONFIG_PATH`           | `/usr/share/nginx/html/assets/settings.json` | Override only if the app is hosted from a different root.                  |
 
 ### Build and run locally
 
@@ -125,15 +125,15 @@ services:
   ng-ultimate-base:
     image: your-org/ng-ultimate-base:latest
     ports:
-      - "8080:80"
+      - '8080:80'
     environment:
-      APP_NAME: "Compose Demo"
-      APP_STORAGE_NAMESPACE: "compose"
+      APP_NAME: 'Compose Demo'
+      APP_STORAGE_NAMESPACE: 'compose'
 ```
 
 ### Release workflow & Docker Hub
 
-The `release` GitHub Action can optionally build and push the Docker image after the Angular build. Toggle the *Build and push Docker image* prompt (`publish_docker`) when you dispatch the workflow. Configure the following repository secrets before triggering a release if you plan to publish the container:
+The `release` GitHub Action can optionally build and push the Docker image after the Angular build. Toggle the _Build and push Docker image_ prompt (`publish_docker`) when you dispatch the workflow. Configure the following repository secrets before triggering a release if you plan to publish the container:
 
 - `DOCKERHUB_USERNAME` – Docker Hub account used for pushes.
 - `DOCKERHUB_TOKEN` – Access token or password for that account.
@@ -144,7 +144,7 @@ Tags published when enabled:
 - `user/image:X.Y.Z` (from the workflow input)
 - `user/image:latest`
 
-If the secrets are missing **or** the Docker option is left unchecked the workflow skips container publishing and still produces the ZIP artifact and GitHub Release.
+If the Docker option is left unchecked the workflow skips container publishing and still produces the ZIP artifact and GitHub Release. When the option is enabled the workflow requires the Docker Hub secrets and aborts the release if building/pushing the image fails.
 
 ---
 
