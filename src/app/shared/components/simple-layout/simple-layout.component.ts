@@ -1,8 +1,8 @@
-﻿import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { APP_CONFIG } from '../../../core/config/app-config.token';
+import { ConfigService } from '../../../core/services/config.service';
 import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
@@ -14,9 +14,10 @@ import { ThemeService } from '../../../core/services/theme.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SimpleLayoutComponent {
-  protected readonly appConfig = inject(APP_CONFIG);
+  protected readonly config = inject(ConfigService);
   protected readonly themeService = inject(ThemeService);
 
+  protected readonly appConfig = this.config.appConfig;
   protected readonly isDark = this.themeService.isDark;
   protected readonly themeLabelKey = computed(() =>
     this.themeService.theme() === 'dark' ? 'LAYOUT.themeToggle.dark' : 'LAYOUT.themeToggle.light',

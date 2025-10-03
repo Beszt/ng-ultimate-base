@@ -2,11 +2,10 @@ import { DOCUMENT } from '@angular/common';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import type { OnDestroy, Signal, WritableSignal } from '@angular/core';
 
-import { appStorageKey } from '../config/app-config.token';
 import type { ThemeName } from '../models/theme-name.model';
+import { ConfigService } from './config.service';
 import { StorageService } from './storage.service';
 
-const THEME_STORAGE_KEY = appStorageKey('theme');
 const DARK_VARIANT_CLASS = 'dark';
 
 @Injectable({ providedIn: 'root' })
@@ -20,6 +19,8 @@ export class ThemeService implements OnDestroy {
   private readonly followSystem: WritableSignal<boolean>;
   private readonly documentRef = inject(DOCUMENT);
   private readonly storage = inject(StorageService);
+  private readonly config = inject(ConfigService);
+  private readonly themeStorageKey = this.config.storageKey('theme');
   private readonly prefersDarkQuery = this.resolvePrefersDarkQuery();
 
   private readonly cleanup: Array<() => void> = [];
@@ -60,7 +61,7 @@ export class ThemeService implements OnDestroy {
     }
 
     this.followSystem.set(false);
-    this.storage.setLocal(THEME_STORAGE_KEY, theme);
+    this.storage.setLocal(this.themeStorageKey, theme);
     this.applyTheme(theme);
 
     return theme;
@@ -73,7 +74,7 @@ export class ThemeService implements OnDestroy {
 
   useSystemPreference(): ThemeName {
     this.followSystem.set(true);
-    this.storage.removeLocal(THEME_STORAGE_KEY);
+    this.storage.removeLocal(this.themeStorageKey);
 
     const theme: ThemeName = this.prefersDarkQuery?.matches ? 'dark' : 'light';
     this.applyTheme(theme);
@@ -102,7 +103,7 @@ export class ThemeService implements OnDestroy {
   }
 
   private restoreStoredTheme(): ThemeName | null {
-    const stored = this.storage.getLocal<ThemeName | null>(THEME_STORAGE_KEY);
+    const stored = this.storage.getLocal<ThemeName | null>(this.themeStorageKey);
     return this.isThemeName(stored) ? stored : null;
   }
 

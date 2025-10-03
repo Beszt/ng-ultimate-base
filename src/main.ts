@@ -18,6 +18,7 @@ import { LanguageService } from './app/core/services/language.service';
 import { AppComponent } from './app/app.component';
 import { routes } from './routes';
 import { httpErrorInterceptor } from './app/core/interceptors/http-error.interceptor';
+import { ConfigService } from './app/core/services/config.service';
 
 function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -40,6 +41,7 @@ bootstrapApplication(AppComponent, {
         },
       }),
     ),
+    provideAppInitializer(() => inject(ConfigService).load()),
     provideAppInitializer(() => inject(ThemeService).init()),
     provideAppInitializer(() => inject(LanguageService).init()),
   ],

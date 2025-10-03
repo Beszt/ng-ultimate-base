@@ -7,17 +7,35 @@ import {
   TranslateService,
 } from '@ngx-translate/core';
 
-import { appStorageKey } from '../../../../core/config/app-config.token';
+import type { AppConfig } from '../../../../core/config/config.model';
 import type { StorageScope } from '../../../../core/models/storage-scope.model';
+import { ConfigService } from '../../../../core/services/config.service';
 import { StorageService } from '../../../../core/services/storage.service';
 import { StorageDemoComponent } from './storage-demo.component';
+
+class ConfigServiceStub {
+  private readonly app: AppConfig = {
+    name: 'Demo Playground',
+    storageNamespace: 'demo.test',
+  };
+
+  get runtimeConfig(): { app: AppConfig } {
+    return { app: this.app };
+  }
+
+  get appConfig(): AppConfig {
+    return this.app;
+  }
+
+  storageKey(suffix: string): string {
+    return `${this.app.storageNamespace}.${suffix}`;
+  }
+}
 
 describe('StorageDemoComponent', () => {
   let fixture: ComponentFixture<StorageDemoComponent>;
   let storage: jasmine.SpyObj<StorageService>;
-
-  const localKey = appStorageKey('localNote');
-  const sessionKey = appStorageKey('sessionNote');
+  let config: ConfigServiceStub;
 
   beforeEach(async () => {
     storage = jasmine.createSpyObj<StorageService>('StorageService', [
@@ -45,8 +63,13 @@ describe('StorageDemoComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
         }),
       ],
-      providers: [{ provide: StorageService, useValue: storage }],
+      providers: [
+        { provide: StorageService, useValue: storage },
+        { provide: ConfigService, useClass: ConfigServiceStub },
+      ],
     }).compileComponents();
+
+    config = TestBed.inject(ConfigService) as unknown as ConfigServiceStub;
 
     fixture = TestBed.createComponent(StorageDemoComponent);
 
@@ -55,6 +78,8 @@ describe('StorageDemoComponent', () => {
   });
 
   it('hydrates values on init', () => {
+    const localKey = config.storageKey('localNote');
+
     storage.isAvailable.and.callFake((scope: StorageScope = 'local') => scope === 'local');
     storage.getLocal.and.returnValue('Local note');
     storage.getSession.and.returnValue('Session note');
@@ -75,6 +100,8 @@ describe('StorageDemoComponent', () => {
   });
 
   it('saves local drafts via the storage service', () => {
+    const localKey = config.storageKey('localNote');
+
     fixture.detectChanges();
 
     const [localSection] = getSections(fixture);
@@ -98,6 +125,8 @@ describe('StorageDemoComponent', () => {
   });
 
   it('clears session drafts via the storage service', () => {
+    const sessionKey = config.storageKey('sessionNote');
+
     fixture.detectChanges();
 
     const [, sessionSection] = getSections(fixture);

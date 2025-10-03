@@ -3,12 +3,9 @@ import type { OnInit, Signal, WritableSignal } from '@angular/core';
 import { Component, Injector, effect, inject, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { appStorageKey } from '../../../../core/config/app-config.token';
 import type { StorageScope } from '../../../../core/models/storage-scope.model';
+import { ConfigService } from '../../../../core/services/config.service';
 import { StorageService } from '../../../../core/services/storage.service';
-
-const LOCAL_NOTE_KEY = appStorageKey('localNote');
-const SESSION_NOTE_KEY = appStorageKey('sessionNote');
 
 @Component({
   selector: 'app-storage-demo',
@@ -34,6 +31,9 @@ export class StorageDemoComponent implements OnInit {
 
   private readonly storage: StorageService;
   private readonly injector: Injector;
+  private readonly config = inject(ConfigService);
+  private readonly localNoteKey = this.config.storageKey('localNote');
+  private readonly sessionNoteKey = this.config.storageKey('sessionNote');
 
   constructor() {
     this.storage = inject(StorageService);
@@ -93,10 +93,10 @@ export class StorageDemoComponent implements OnInit {
 
     this.availabilitySignal.set({ local: localAvailable, session: sessionAvailable });
     this.localValueSignal.set(
-      localAvailable ? this.storage.getLocal<string>(LOCAL_NOTE_KEY) : null,
+      localAvailable ? this.storage.getLocal<string>(this.localNoteKey) : null,
     );
     this.sessionValueSignal.set(
-      sessionAvailable ? this.storage.getSession<string>(SESSION_NOTE_KEY) : null,
+      sessionAvailable ? this.storage.getSession<string>(this.sessionNoteKey) : null,
     );
     this.lastUpdatedScopeSignal.set(null);
     this.lastUpdatedAtSignal.set(null);
@@ -169,6 +169,6 @@ export class StorageDemoComponent implements OnInit {
   }
 
   private resolveKey(scope: StorageScope): string {
-    return scope === 'local' ? LOCAL_NOTE_KEY : SESSION_NOTE_KEY;
+    return scope === 'local' ? this.localNoteKey : this.sessionNoteKey;
   }
 }
