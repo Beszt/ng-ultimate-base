@@ -1,4 +1,4 @@
-﻿# Quick Setup Checklist (ng-ultimate-base)
+# Quick Setup Checklist (ng-ultimate-base)
 
 Follow these steps after creating a new project from this template.
 
@@ -44,9 +44,10 @@ Follow these steps after creating a new project from this template.
 
 ---
 
-## 6. Environments and i18n
+## 6. Runtime Config and i18n
 
-- [ ] Update `environment.ts` and `environment.prod.ts`
+- [ ] Update `src/assets/settings.json` with your app name and storage namespace
+- [ ] Verify overrides via `APP_NAME` / `APP_STORAGE_NAMESPACE` when running the Docker image
 - [ ] Add or update translations in `assets/i18n/`
 
 ---
@@ -54,4 +55,5 @@ Follow these steps after creating a new project from this template.
 ## 7. CI/CD
 
 - [ ] Open a PR into `develop` and confirm CI runs lint, test, and build
-- [ ] Trigger the release workflow with a version (X.Y.Z) and confirm branch, tag, and release creation
+- [ ] Configure Docker Hub secrets (`DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `DOCKERHUB_REPOSITORY`) if you want Docker pushes
+- [ ] Trigger the release workflow with a version (X.Y.Z); optionally enable the Docker toggle and confirm branch, tag, artifacts, and (when enabled) Docker image

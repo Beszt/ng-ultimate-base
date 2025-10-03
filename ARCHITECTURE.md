@@ -1,4 +1,4 @@
-﻿# ARCHITECTURE.md
+# ARCHITECTURE.md
 
 ## 1. Overview
 
@@ -30,10 +30,10 @@ src/
     app.component.*    # root bootstrap component
 ```
 
-Other important folders:
+Other important folders/files:
 
 - `src/assets/i18n/` -- language JSON files (`en.json`, `pl.json`, etc.)
-- `src/environments/` -- environment configs (`environment.ts`, `environment.prod.ts`)
+- `src/assets/settings.json` -- runtime application configuration consumed by `ConfigService`
 - `dist/` -- build output (ignored in Git)
 
 ---
@@ -42,7 +42,7 @@ Other important folders:
 
 Contains functionality shared across the whole app:
 
-- Configuration and bootstrap providers
+- `ConfigService` for configuration and bootstrap
 - `ThemeService` for light/dark theme switching via CSS variables
 - `StorageService` for local and session storage with fallbacks
 - `LanguageService` for ngx-translate initialization
@@ -103,7 +103,7 @@ The template includes a `demo/` feature that demonstrates:
 
 ## 9. Configuration
 
-- Environments: `dev` and `prod` via Angular CLI file replacements
+- Runtime settings live in `src/assets/settings.json` and are loaded at startup by `ConfigService`
 - ESLint and Prettier aligned for linting and formatting
 - Husky and lint-staged enforce checks before each commit
 - `.vscode` folder ships workspace settings, tasks, launch config, and recommended extensions
@@ -125,6 +125,7 @@ The template includes a `demo/` feature that demonstrates:
 - Tags commit `vX.Y.Z`
 - Builds production bundle
 - Publishes GitHub Release with the artifact `.zip`
+- (Optional) Builds & pushes the Docker image when Docker Hub secrets are configured
 
 ---
 

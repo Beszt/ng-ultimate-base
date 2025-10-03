@@ -1,6 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 
+import type { AppConfig } from '../config/config.model';
+import { ConfigService } from './config.service';
 import { StorageService } from './storage.service';
 import { ThemeService } from './theme.service';
 
@@ -48,6 +50,25 @@ class MockMediaQueryList implements MediaQueryList {
   }
 }
 
+class ConfigServiceStub {
+  private readonly app: AppConfig = {
+    name: 'Demo Playground',
+    storageNamespace: 'demo',
+  };
+
+  get runtimeConfig(): { app: AppConfig } {
+    return { app: this.app };
+  }
+
+  get appConfig(): AppConfig {
+    return this.app;
+  }
+
+  storageKey(suffix: string): string {
+    return `${this.app.storageNamespace}.${suffix}`;
+  }
+}
+
 describe('ThemeService', () => {
   let service: ThemeService;
   let storage: jasmine.SpyObj<StorageService>;
@@ -70,7 +91,11 @@ describe('ThemeService', () => {
       jasmine.createSpy('matchMedia').and.returnValue(mediaQuery as unknown as MediaQueryList);
 
     TestBed.configureTestingModule({
-      providers: [ThemeService, { provide: StorageService, useValue: storage }],
+      providers: [
+        ThemeService,
+        { provide: StorageService, useValue: storage },
+        { provide: ConfigService, useClass: ConfigServiceStub },
+      ],
     });
 
     documentElement = TestBed.inject(DOCUMENT).documentElement;
