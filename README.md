@@ -73,6 +73,8 @@
   this.toast.showError('demo.fetch.error');
   ```
 
+- `SpinnerService` provides a global loading overlay driven by signals. Call `show()`/`hide()` directly or wrap async flows with `trackObservable`/`trackPromise` to keep UX consistent.
+
 ### Theming
 
 - Theme styles live in `src/styles/themes/light.scss` and `dark.scss`. Extend design tokens or CSS variables there. Both files target `[data-theme="<name>"]` so additions work for light and dark variants.

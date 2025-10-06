@@ -5,6 +5,7 @@ import { EMPTY } from 'rxjs';
 import { switchMap, tap, catchError, finalize } from 'rxjs/operators';
 import type { DemoPost } from '../models/demo-post.model';
 import { DemoApiService } from '../services/demo-api.service';
+import { SpinnerService } from '../../../core/services/spinner.service';
 
 type DemoState = {
   posts: DemoPost[];
@@ -23,10 +24,14 @@ export const DemoStore = signalStore(
 
   withMethods((store) => {
     const api = inject(DemoApiService);
+    const spinner = inject(SpinnerService);
 
     const loadPosts = rxMethod<number>((limit$) =>
       limit$.pipe(
-        tap(() => patchState(store, { loading: true })),
+        tap(() => {
+          spinner.show('DEMO.loading');
+          patchState(store, { loading: true });
+        }),
         switchMap((limit) =>
           api.fetchPosts(limit).pipe(
             tap((data) =>
@@ -39,7 +44,10 @@ export const DemoStore = signalStore(
               patchState(store, { posts: [] });
               return EMPTY;
             }),
-            finalize(() => patchState(store, { loading: false })),
+            finalize(() => {
+              patchState(store, { loading: false });
+              spinner.hide();
+            }),
           ),
         ),
       ),

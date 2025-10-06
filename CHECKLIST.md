@@ -39,6 +39,7 @@ Follow these steps after creating a new project from this template.
 
 - [ ] Fetching posts works
 - [ ] Toast shows after loading posts
+- [ ] Spinner overlay displays while posts load
 - [ ] Local and session storage actions succeed
 - [ ] Theme switch (light/dark) works
 

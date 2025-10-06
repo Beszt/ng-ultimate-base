@@ -1,4 +1,4 @@
-﻿<div class="space-y-6">
+<div class="space-y-6">
   <div class="flex flex-wrap items-center justify-between gap-4">
     <h2 class="text-2xl font-semibold text-[color:var(--var-text-primary)]">
       {{ 'DEMO.posts' | translate: { count: store.posts().length } }}
@@ -9,10 +9,6 @@
     >
       {{ 'DEMO.loadNposts' | translate: { count: 10 } }}
     </button>
-  </div>
-
-  <div *ngIf="store.loading()" class="text-sm font-medium text-[color:var(--var-primary)]">
-    {{ 'DEMO.loading' | translate }}
   </div>
 
   <ul class="space-y-4">

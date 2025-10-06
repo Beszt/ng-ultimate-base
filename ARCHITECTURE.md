@@ -47,6 +47,7 @@ Contains functionality shared across the whole app:
 - `StorageService` for local and session storage with fallbacks
 - `LanguageService` for ngx-translate initialization
 - `ToastService` for translated toast notifications
+- `SpinnerService` for a centralized loading overlay with async helpers
 
 ---
 
