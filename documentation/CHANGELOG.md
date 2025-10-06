@@ -1,4 +1,13 @@
-﻿# Changelog
+# Changelog
+
+## 1.2.0 - Quality of Life (2025-10-06)
+
+- Implemented automatic CHANGELOG.MD (#32)
+- Bugfix: Toasts shadows now properly rendering on different themes (#31)
+- Provided favicon (#30)
+- Implemented spinner service (#29)
+- Implemented shields.io in README.MD (#28)
+- Implemented AppVersion feature (#27)
 
 ## 1.1.0 - Docker (2025-10-03)
 
