@@ -1,1 +1,21 @@
 <app-demo></app-demo>
+
+<div
+  *ngIf="spinner.isVisible()"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-[color:var(--var-background)]/65 backdrop-blur-sm"
+  role="status"
+  aria-live="polite"
+  aria-busy="true"
+>
+  <div
+    class="flex items-center gap-3 rounded-xl border border-[color:var(--var-border)] bg-[color:var(--var-surface)] px-6 py-4 shadow-lg"
+  >
+    <span
+      class="inline-flex h-8 w-8 animate-spin rounded-full border-[3px] border-[color:var(--var-primary)] border-t-transparent"
+      aria-hidden="true"
+    ></span>
+    <span class="text-sm font-medium text-[color:var(--var-text-primary)]">
+      {{ (spinner.message() ?? 'DEMO.loading') | translate }}
+    </span>
+  </div>
+</div>
