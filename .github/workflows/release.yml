@@ -1,4 +1,4 @@
-name: Release
+﻿name: Release
 
 on:
   workflow_dispatch:
@@ -47,6 +47,11 @@ jobs:
         with:
           node-version: 24
           cache: npm
+
+      - name: Inject app version
+        run: |
+          sed -i "s/^export const APP_VERSION = .*/export const APP_VERSION = '${{ github.event.inputs.version }}';/" src/APP_VERSION.ts
+          grep -q "export const APP_VERSION = '${{ github.event.inputs.version }}';" src/APP_VERSION.ts
 
       - name: Install
         run: npm ci
@@ -119,3 +124,4 @@ jobs:
           prerelease: false
           files: |
             out/ng-ultimate-base-${{ github.event.inputs.version }}.zip
+
