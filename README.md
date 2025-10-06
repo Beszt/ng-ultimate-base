@@ -1,25 +1,39 @@
 ﻿# ng-ultimate-base
 
-A template Angular 20 project with Material UI, Tailwind CSS, Signals, i18n, ESLint, Prettier, Husky, and CI/CD. Designed to kickstart new apps with a clean architecture and ready-to-go developer experience.
+<p align="center">
+  <a href="https://github.com/Beszt/ng-ultimate-base/actions/workflows/ci.yml">
+    <img alt="CI Status" src="https://img.shields.io/github/actions/workflow/status/Beszt/ng-ultimate-base/ci.yml?label=CI%20Build&logo=githubactions&logoColor=white&color=22c55e">
+  </a>
+  <a href="https://github.com/Beszt/ng-ultimate-base/actions/workflows/release.yml">
+    <img alt="Release" src="https://img.shields.io/github/actions/workflow/status/Beszt/ng-ultimate-base/release.yml?label=Release&logo=semanticrelease&logoColor=white&color=0ea5e9">
+  </a>
+  <a href="https://github.com/Beszt/ng-ultimate-base/deployments">
+    <img alt="Deploys" src="https://img.shields.io/github/deployments/Beszt/ng-ultimate-base/production?label=Deploys&logo=vercel&logoColor=white&color=8b5cf6">
+  </a>
+  <img alt="Angular" src="https://img.shields.io/badge/Angular-20-EA1E63?logo=angular&logoColor=white">
+  <img alt="TailwindCSS" src="https://img.shields.io/badge/Tailwind-3-38BDF8?logo=tailwindcss&logoColor=white">
+  <img alt="License" src="https://img.shields.io/github/license/Beszt/ng-ultimate-base?color=f97316&logo=open-source-initiative&logoColor=white">
+</p>
+
+> A template Angular 20 project with Material UI, Tailwind CSS, Signals, i18n, ESLint, Prettier, Husky, and CI/CD.  
+> Designed to kickstart new apps with a clean architecture and ready-to-go developer experience.
 
 ---
 
-## Highlights
+## ✨ Highlights
 
-- Angular 20 with standalone APIs and Angular Material
-- Tailwind CSS with Prettier powered class sorting
-- Signals and Signal Store pattern for state management
-- ngx-translate integration (assets/i18n + translate pipe)
-- Toast service with translation support
-- Local/session storage service with safe fallbacks
-- Runtime configuration loaded from `/assets/settings.json`
-- ESLint, Prettier, Husky pre-commit checks
-- Ready-to-use VS Code setup (`.vscode/`)
-- CI/CD workflows for PR validation, releases, and Docker pushes
+🚀 **Angular 20** + standalone APIs + Angular Material  
+🎨 **Tailwind CSS** with Prettier-powered class sorting  
+🧠 **Signals + Signal Store** for reactive state management  
+🌐 **ngx-translate** with runtime `/assets/settings.json`  
+📜 **Toast & Storage Services** with smart fallback logic  
+🧰 **ESLint, Prettier, Husky** for consistent commits  
+🗂️ **Ready-to-use VS Code workspace**  
+🐳 **GitHub Actions & Docker** for CI/CD and release pipelines
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 1. Run `npm ci`.
 2. Start the dev server with `npm start` and open `http://localhost:4200`.
@@ -28,7 +42,7 @@ A template Angular 20 project with Material UI, Tailwind CSS, Signals, i18n, ESL
 
 ---
 
-## Core Building Blocks
+## 🧩 Core Building Blocks
 
 ### Services
 
@@ -37,7 +51,6 @@ A template Angular 20 project with Material UI, Tailwind CSS, Signals, i18n, ESL
 - `ThemeService` Provides light/dark themes, system preference detection, and persists the last choice. It is initialized through `provideAppInitializer` in `main.ts`, so the theme is ready before the first paint.
 
   ```ts
-  // Toggle or force a theme inside any component
   this.themeService.toggleTheme();
   this.themeService.setTheme('dark');
   this.themeService.useSystemPreference();
@@ -74,7 +87,7 @@ A template Angular 20 project with Material UI, Tailwind CSS, Signals, i18n, ESL
 
 ---
 
-## Runtime Configuration
+## ⚙️ Runtime Configuration
 
 Runtime settings are loaded at startup from `/assets/settings.json` (copied from `src/assets/settings.json` during build). `ConfigService` merges the JSON with sane defaults and normalizes values such as the storage namespace.
 
@@ -93,7 +106,7 @@ Runtime settings are loaded at startup from `/assets/settings.json` (copied from
 
 ---
 
-## Docker Deployment
+## 🐳 Docker Deployment
 
 The repository ships a multi-stage `Dockerfile` (`node:20-alpine` -> `nginx:alpine`) that builds the Angular app and serves it through Nginx. At container start the entrypoint script rewrites `/usr/share/nginx/html/assets/settings.json` from environment variables so you can _build once, run anywhere_.
 
@@ -148,7 +161,7 @@ If the Docker option is left unchecked the workflow skips container publishing a
 
 ---
 
-## What's Next
+## 🧠 What's Next
 
 - Replace the demo feature with your domain feature set and keep the same folder conventions.
 - Tailor `src/assets/settings.json` (or runtime env vars) with your product name, storage namespace, and other config values.
@@ -158,7 +171,7 @@ If the Docker option is left unchecked the workflow skips container publishing a
 
 ---
 
-## Pro Tips
+## 💡 Pro Tips
 
 - Keep shared services stateless where possible; prefer Signal Stores inside features for business data.
 - Use `ConfigService.storageKey()` for any persisted state so runtime namespaces stay in sync.
@@ -169,7 +182,7 @@ If the Docker option is left unchecked the workflow skips container publishing a
 
 ---
 
-## Additional Documentation
+## 📚 Additional Documentation
 
 - [ARCHITECTURE.md](./ARCHITECTURE.md) - folder layout, layers, and extension guidance.
 - [CHECKLIST.md](./CHECKLIST.md) - one-time setup steps after cloning.
