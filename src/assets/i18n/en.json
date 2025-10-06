@@ -77,6 +77,7 @@
   },
   "LAYOUT": {
     "brand": "{{appName}}",
+    "version": "v{{appVersion}}",
     "nav": {
       "overview": "Overview",
       "features": "Features",
