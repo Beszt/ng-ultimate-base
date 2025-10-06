@@ -1,3 +1,12 @@
 ﻿@use './themes/light';
 @use './themes/dark';
 @use './tailwind.css';
+
+#toast-container .ngx-toastr {
+  box-shadow: var(--var-toast-shadow, 0 0 12px rgba(15, 23, 42, 0.2));
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+#toast-container .ngx-toastr:hover {
+  box-shadow: var(--var-toast-shadow-hover, 0 0 16px rgba(15, 23, 42, 0.3));
+}
