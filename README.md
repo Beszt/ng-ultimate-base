@@ -37,8 +37,8 @@
 
 1. Run `npm ci`.
 2. Start the dev server with `npm start` and open `http://localhost:4200`.
-3. Walk through [CHECKLIST.md](./CHECKLIST.md) to align tooling, runtime configuration, and CI.
-4. Review [ARCHITECTURE.md](./ARCHITECTURE.md) for the folder structure and conventions.
+3. Walk through [CHECKLIST.md](./documentation/CHECKLIST.md) to align tooling, runtime configuration, and CI.
+4. Review [ARCHITECTURE.md](./documentation/ARCHITECTURE.md) for the folder structure and conventions.
 
 ---
 
@@ -186,6 +186,7 @@ If the Docker option is left unchecked the workflow skips container publishing a
 
 ## 📚 Additional Documentation
 
-- [ARCHITECTURE.md](./ARCHITECTURE.md) - folder layout, layers, and extension guidance.
-- [CHECKLIST.md](./CHECKLIST.md) - one-time setup steps after cloning.
+- [CHANGELOG.md](./documentation/CHANGELOG.md) - release history.
+- [ARCHITECTURE.md](./documentation/ARCHITECTURE.md) - folder layout, layers, and extension guidance.
+- [CHECKLIST.md](./documentation/CHECKLIST.md) - one-time setup steps after cloning.
 - `.github/workflows/` - CI/CD definitions for pull requests, releases, and Docker pushes.

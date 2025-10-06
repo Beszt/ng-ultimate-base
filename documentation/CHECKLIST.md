@@ -58,3 +58,9 @@ Follow these steps after creating a new project from this template.
 - [ ] Open a PR into `develop` and confirm CI runs lint, test, and build
 - [ ] Configure Docker Hub secrets (`DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `DOCKERHUB_REPOSITORY`) if you want Docker pushes
 - [ ] Trigger the release workflow with a version (X.Y.Z); optionally enable the Docker toggle and confirm branch, tag, artifacts, and (when enabled) Docker image
+- [ ] Run workflow helper scripts locally when prepping a release (example values shown) to test auto changelog and update version mechanincs work:
+  ```bash
+  node .github/workflows/tools/update-changelog.cjs 9.9.9 "Test Release"
+  node .github/workflows/tools/update-app-version.cjs 9.9.9
+  node .github/workflows/tools/verify-release-readiness.cjs 9.9.9 "Test Release"
+  ```

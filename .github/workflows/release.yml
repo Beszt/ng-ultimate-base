@@ -7,6 +7,10 @@ on:
         description: 'Version in format X.Y.Z (ex. 0.1.0)'
         required: true
         type: string
+      version_name:
+        description: 'Release name (e.g. Docker)'
+        required: true
+        type: string
       publish_docker:
         description: 'Build and push Docker image'
         required: false
@@ -48,10 +52,13 @@ jobs:
           node-version: 24
           cache: npm
 
-      - name: Inject app version
-        run: |
-          sed -i "s/^export const APP_VERSION = .*/export const APP_VERSION = '${{ github.event.inputs.version }}';/" src/APP_VERSION.ts
-          grep -q "export const APP_VERSION = '${{ github.event.inputs.version }}';" src/APP_VERSION.ts
+      - name: Update changelog
+        run: node .github/workflows/tools/update-changelog.cjs "${{ github.event.inputs.version }}" "${{ github.event.inputs.version_name }}"
+      - name: Update app version
+        run: node .github/workflows/tools/update-app-version.cjs "${{ github.event.inputs.version }}"
+
+      - name: Verify release files
+        run: node .github/workflows/tools/verify-release-readiness.cjs "${{ github.event.inputs.version }}" "${{ github.event.inputs.version_name }}"
 
       - name: Install
         run: npm ci
