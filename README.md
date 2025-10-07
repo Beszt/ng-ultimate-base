@@ -1,4 +1,8 @@
-﻿# ng-ultimate-base
+﻿<p align="center">
+  <img src="./logo.png" alt="ng-ultimate-base logo" width="160">
+</p>
+
+<h1 align="center">⚡ ng-ultimate-base ⚡</h1>
 
 <p align="center">
   <a href="https://github.com/Beszt/ng-ultimate-base/actions/workflows/ci.yml">
