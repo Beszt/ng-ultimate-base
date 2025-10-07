@@ -1,47 +1,47 @@
 ﻿{
   "ERROR": {
-    "network": "Blad sieci. Sprawdz swoje polaczenie internetowe.",
-    "server": "Wewnetrzny blad serwera. Sprobuj ponownie pozniej.",
+    "network": "Błąd sieci. Sprawdź swoje połączenie internetowe.",
+    "server": "Wewnętrzny błąd serwera. Spróbuj ponownie później.",
     "notFound": "Nie znaleziono zasobu.",
-    "unauthorized": "Nieautoryzowany dostep.",
-    "generic": "Wystapil nieznany blad. Sprobuj ponownie."
+    "unauthorized": "Nieautoryzowany dostęp.",
+    "generic": "Wystąpił nieznany błąd. Spróbuj ponownie."
   },
   "TOAST": {
     "success": "Sukces",
-    "error": "Blad",
+    "error": "Błąd",
     "info": "Informacja",
-    "warning": "Ostrzezenie"
+    "warning": "Ostrzeżenie"
   },
   "DEMO": {
-    "posts": "{{count}} Postow",
-    "loadNposts": "Zaladuj {{count}} postow",
-    "loadedNposts": "Zaladowano {{count}} postow",
-    "loading": "Ladowanie...",
+    "posts": "{{count}} Postów",
+    "loadNposts": "Załaduj {{count}} postów",
+    "loadedNposts": "Załadowano {{count}} postów",
+    "loading": "Ładowanie...",
     "fetchApiCard": {
       "title": "Prezentacja Fetch API",
-      "description": "Poznaj posty obslugiwane przez signal store"
+      "description": "Poznaj posty obsługiwane przez signal store"
     },
     "storageCard": {
       "title": "Prezentacja Storage",
-      "description": "Zapisz tekst w local i session storage z uzyciem globalnego store"
+      "description": "Zapisz tekst w local i session storage z użyciem globalnego store"
     },
     "storage": {
-      "explainer": "Zapisz zwykly tekst do pamieci przegladarki i zobacz jak SignalStore synchronizuje oba zasiegi.",
+      "explainer": "Zapisz zwykły tekst do pamięci przeglądarki i zobacz jak SignalStore synchronizuje oba zasięgi.",
       "local": {
         "title": "Local storage"
       },
       "session": {
         "title": "Session storage"
       },
-      "label": "Wartosc",
-      "currentValue": "Zapisana wartosc",
+      "label": "Wartość",
+      "currentValue": "Zapisana wartość",
       "empty": "Brak danych",
       "actions": {
         "save": "Zapisz",
-        "clear": "Wyczysc"
+        "clear": "Wyczyść"
       },
       "status": {
-        "available": "dostepne",
+        "available": "dostępne",
         "unavailable": "tryb awaryjny"
       },
       "lastUpdated": "Ostatnia aktualizacja: {{scope}} o {{time}}",
@@ -49,47 +49,18 @@
         "local": "local storage",
         "session": "session storage"
       }
-    },
-    "themeDemo": {
-      "title": "Dynamiczna prezentacja motywu",
-      "description": "Zobacz jak globalna paleta reaguje podczas przelaczania {{theme}}.",
-      "badge": "Aktywny motyw: {{mode}}",
-      "mode": {
-        "light": "Tryb jasny",
-        "dark": "Tryb ciemny"
-      },
-      "actions": {
-        "light": "Jasny",
-        "dark": "Ciemny",
-        "system": "Domyslny systemu"
-      },
-      "system": {
-        "active": "Motyw podaza za ustawieniami systemu operacyjnego.",
-        "inactive": "Motyw ustawiony recznie i zapisany w tej przegladarce."
-      },
-      "tokens": {
-        "background": "Tlo strony",
-        "surface": "Powierzchnia",
-        "primary": "Kolor glowny",
-        "accent": "Dodatkowy akcent"
-      }
     }
   },
   "LAYOUT": {
     "brand": "{{appName}}",
     "version": "v{{appVersion}}",
-    "nav": {
-      "overview": "Przeglad",
-      "features": "Funkcje",
-      "docs": "Dokumentacja"
-    },
     "themeToggle": {
       "label": "Motyw",
       "light": "Tryb jasny",
       "dark": "Tryb ciemny",
       "switchTo": {
-        "light": "Przelacz na tryb jasny",
-        "dark": "Przelacz na tryb ciemny"
+        "light": "Przełącz na tryb jasny",
+        "dark": "Przełącz na tryb ciemny"
       }
     }
   }
