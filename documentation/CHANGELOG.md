@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.1 - Hotfixes (2025-10-07)
+
+- Bugfix: CHANGELOG.MD is properly commiting in release workflow (#40)
+- Added logo to README.MD (#39)
+- Fix diacritics in PL language + remove unused translates (#37)
+- Updated changelog for 1.2.0 version (#35)
+
 ## 1.2.0 - Quality of Life (2025-10-06)
 
 - Implemented automatic CHANGELOG.MD (#32)
