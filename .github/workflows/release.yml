@@ -44,7 +44,7 @@ jobs:
         run: |
           REL="release/${{ github.event.inputs.version }}"
           git switch -c "$REL"
-          git push origin "$REL"
+          git push --set-upstream origin "$REL"
 
       - name: Use Node.js 24
         uses: actions/setup-node@v4
@@ -52,13 +52,30 @@ jobs:
           node-version: 24
           cache: npm
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
       - name: Update changelog
-        run: node .github/workflows/tools/update-changelog.cjs "${{ github.event.inputs.version }}" "${{ github.event.inputs.version_name }}"
+        run: python3 .github/workflows/tools/update_changelog.py "${{ github.event.inputs.version }}" "${{ github.event.inputs.version_name }}"
       - name: Update app version
-        run: node .github/workflows/tools/update-app-version.cjs "${{ github.event.inputs.version }}"
+        run: python3 .github/workflows/tools/update_app_version.py "${{ github.event.inputs.version }}"
+
+      - name: Commit and push release updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add documentation/CHANGELOG.md src/APP_VERSION.ts
+          if git diff --cached --quiet; then
+            echo "No release changes detected; aborting."
+            exit 1
+          fi
+          git commit -m "[workflow-release] v${{ github.event.inputs.version }} - ${{ github.event.inputs.version_name }}"
+          git push
 
       - name: Verify release files
-        run: node .github/workflows/tools/verify-release-readiness.cjs "${{ github.event.inputs.version }}" "${{ github.event.inputs.version_name }}"
+        run: python3 .github/workflows/tools/verify_release_readiness.py "${{ github.event.inputs.version }}" "${{ github.event.inputs.version_name }}"
 
       - name: Install
         run: npm ci
