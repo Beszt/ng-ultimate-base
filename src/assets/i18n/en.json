@@ -49,40 +49,11 @@
         "local": "local storage",
         "session": "session storage"
       }
-    },
-    "themeDemo": {
-      "title": "Dynamic theme playground",
-      "description": "Preview how the global palette reacts when switching between {{theme}}.",
-      "badge": "Active theme: {{mode}}",
-      "mode": {
-        "light": "Light mode",
-        "dark": "Dark mode"
-      },
-      "actions": {
-        "light": "Light",
-        "dark": "Dark",
-        "system": "System default"
-      },
-      "system": {
-        "active": "Following the operating system preference.",
-        "inactive": "Manual preference stored for this browser."
-      },
-      "tokens": {
-        "background": "Page background",
-        "surface": "Surface",
-        "primary": "Primary accent",
-        "accent": "Secondary accent"
-      }
     }
   },
   "LAYOUT": {
     "brand": "{{appName}}",
     "version": "v{{appVersion}}",
-    "nav": {
-      "overview": "Overview",
-      "features": "Features",
-      "docs": "Docs"
-    },
     "themeToggle": {
       "label": "Theme",
       "light": "Light mode",
