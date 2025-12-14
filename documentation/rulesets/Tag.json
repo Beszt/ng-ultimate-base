@@ -1,0 +1,31 @@
+{
+  "id": 8197048,
+  "name": "Tag",
+  "target": "tag",
+  "source_type": "Repository",
+  "source": "Beszt/ng-ultimate-base",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "exclude": [],
+      "include": [
+        "~ALL"
+      ]
+    }
+  },
+  "rules": [
+    {
+      "type": "deletion"
+    },
+    {
+      "type": "non_fast_forward"
+    }
+  ],
+  "bypass_actors": [
+    {
+      "actor_id": 5,
+      "actor_type": "RepositoryRole",
+      "bypass_mode": "always"
+    }
+  ]
+}
