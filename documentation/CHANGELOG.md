@@ -2,15 +2,7 @@
 
 ## 1.2.2 - Documentation improvement (2025-12-14)
 
-- Update CHANGELOG.md to remove version 1.2.2
-- Updated README.MD
-- Updated CHANGELOG.MD (#45)
 - Added settings overview + rulesets to documentationng lint (#43)
-- [workflow-release] v1.2.1 - Hotfixes (#41)
-- Bugfix: CHANGELOG.MD is properly commiting in release workflow (#40)
-- Added logo to README.MD (#39)
-- Fix diacritics in PL language + remove unused translates (#37)
-- Updated changelog for 1.2.0 version (#35)
 
 ## 1.2.1 - Hotfixes (2025-10-07)
 
