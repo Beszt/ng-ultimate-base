@@ -1,5 +1,5 @@
 ﻿<p align="center">
-  <img src="./logo.png" alt="ng-ultimate-base logo" width="160">
+  <img src="./logo.png" alt="ng-ultimate-base logo" width="250">
 </p>
 
 <h1 align="center">⚡ ng-ultimate-base ⚡</h1>
