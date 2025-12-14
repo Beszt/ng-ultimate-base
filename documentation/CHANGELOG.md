@@ -1,9 +1,5 @@
 # Changelog
 
-## 1.2.2 - Documentation improvement (2025-12-14)
-
-- Added settings overview + rulesets to documentationng lint (#43)
-
 ## 1.2.1 - Hotfixes (2025-10-07)
 
 - Bugfix: CHANGELOG.MD is properly commiting in release workflow (#40)
