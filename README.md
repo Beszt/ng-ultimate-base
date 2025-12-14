@@ -200,7 +200,7 @@ If the Docker option is left unchecked the workflow skips container publishing a
 
 ## 📚 Additional Documentation
 
-- [CHANGELOG.md](./documentation/CHANGELOG.md) - release history.
+- [CHANGELOG.md](./documentation/CHANGELOG.md) - releases history.
 - [ARCHITECTURE.md](./documentation/ARCHITECTURE.md) - folder layout, layers, and extension guidance.
 - [CHECKLIST.md](./documentation/CHECKLIST.md) - one-time setup steps after cloning.
 - [GITHUB_SETTINGS.md](./documentation/GITHUB_SETTINGS.md) - GitHub repository settings, rulesets, and environment configuration.
