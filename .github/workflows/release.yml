@@ -23,11 +23,11 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-    environment: production
+    environment: Production
     env:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-      DOCKERHUB_REPOSITORY: ${{ secrets.DOCKERHUB_REPOSITORY }}
+      DOCKERHUB_REPOSITORY: ${{ vars.DOCKERHUB_REPOSITORY }}
     steps:
       - name: Checkout develop
         uses: actions/checkout@v4
@@ -148,4 +148,3 @@ jobs:
           prerelease: false
           files: |
             out/ng-ultimate-base-${{ github.event.inputs.version }}.zip
-

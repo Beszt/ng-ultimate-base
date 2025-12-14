@@ -152,18 +152,28 @@ services:
 
 ### Release workflow & Docker Hub
 
-The `release` GitHub Action can optionally build and push the Docker image after the Angular build. Toggle the _Build and push Docker image_ prompt (`publish_docker`) when you dispatch the workflow. Configure the following repository secrets before triggering a release if you plan to publish the container:
+The `release` GitHub Action can optionally build and push the Docker image after the Angular build. Toggle the _Build and push Docker image_ prompt (`publish_docker`) when you dispatch the workflow. Configure the `Production` environment before triggering a release if you plan to publish the container:
 
-- `DOCKERHUB_USERNAME` – Docker Hub account used for pushes.
-- `DOCKERHUB_TOKEN` – Access token or password for that account.
-- `DOCKERHUB_REPOSITORY` – Target repository in `user/image` format (e.g. `acme/ng-ultimate-base`).
+- `DOCKERHUB_USERNAME` (environment variable) - Docker Hub account used for pushes.
+- `DOCKERHUB_REPOSITORY` (environment variable) - Target repository in `user/image` format (e.g. `acme/ng-ultimate-base`).
+- `DOCKERHUB_TOKEN` (environment secret) - Access token or password for that account.
 
 Tags published when enabled:
 
 - `user/image:X.Y.Z` (from the workflow input)
 - `user/image:latest`
 
-If the Docker option is left unchecked the workflow skips container publishing and still produces the ZIP artifact and GitHub Release. When the option is enabled the workflow requires the Docker Hub secrets and aborts the release if building/pushing the image fails.
+If the Docker option is left unchecked the workflow skips container publishing and still produces the ZIP artifact and GitHub Release. When the option is enabled the workflow requires the Docker Hub credentials (variables + token secret) and aborts the release if building/pushing the image fails.
+
+---
+
+## GitHub Settings & Rulesets
+
+- Default branch: `develop`; allow only squash merges, and enable automatic deletion of head branches after merges.
+- Import ruleset exports from `documentation/rulesets/Develop.json`, `documentation/rulesets/Release.json`, and `documentation/rulesets/Tag.json` via GitHub Settings to enforce branch/tag protections (Develop requires 1 approving review with resolved threads; Release/Tag block deletions and force pushes).
+- Set Actions workflow permissions to **Read and write** and allow GitHub Actions to create and approve pull requests so release helpers can commit back safely.
+- Create the `Production` environment with required reviewers plus variables `DOCKERHUB_USERNAME`, `DOCKERHUB_REPOSITORY` and secret `DOCKERHUB_TOKEN`; the release workflow reads them when Docker publishing is enabled.
+- See `documentation/GITHUB_SETTINGS.md` for a full walkthrough of the recommended repository configuration.
 
 ---
 
@@ -193,4 +203,5 @@ If the Docker option is left unchecked the workflow skips container publishing a
 - [CHANGELOG.md](./documentation/CHANGELOG.md) - release history.
 - [ARCHITECTURE.md](./documentation/ARCHITECTURE.md) - folder layout, layers, and extension guidance.
 - [CHECKLIST.md](./documentation/CHECKLIST.md) - one-time setup steps after cloning.
+- [GITHUB_SETTINGS.md](./documentation/GITHUB_SETTINGS.md) - GitHub repository settings, rulesets, and environment configuration.
 - `.github/workflows/` - CI/CD definitions for pull requests, releases, and Docker pushes.
