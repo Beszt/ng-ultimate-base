@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0 - Welcome aspnet-ultimate-base (2025-12-15)
+
+- Refactored example of fetch API functionality to use aspnet-ultimate-base demo (#48)
+
 ## 1.2.2 - Documentation improvement (2025-12-14)
 
 - Added settings overview + rulesets to documentationng lint (#43)
