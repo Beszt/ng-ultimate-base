@@ -4,8 +4,7 @@ import type { Observable } from 'rxjs';
 
 import type { DemoProduct } from '../models/demo-product.model';
 
-// Use the dev-server proxy (proxy.conf.json) to avoid CORS issues in local dev.
-const API_BASE_URL = '/api';
+const API_BASE_URL = 'https://aspnet-ultimate-base.obisoft.pl';
 
 @Injectable({ providedIn: 'root' })
 export class DemoApiService {
