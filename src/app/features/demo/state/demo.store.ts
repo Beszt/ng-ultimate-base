@@ -3,21 +3,26 @@ import { inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { EMPTY } from 'rxjs';
 import { switchMap, tap, catchError, finalize } from 'rxjs/operators';
-import type { DemoPost } from '../models/demo-post.model';
+import type { DemoProduct } from '../models/demo-product.model';
 import { DemoApiService } from '../services/demo-api.service';
 import { SpinnerService } from '../../../core/services/spinner.service';
 
 type DemoState = {
-  posts: DemoPost[];
+  products: DemoProduct[];
   loading: boolean;
   loadSuccessTick: number;
+};
+
+type LoadProductsParams = {
+  count: number;
+  append?: boolean;
 };
 
 export const DemoStore = signalStore(
   { providedIn: 'root' },
 
   withState<DemoState>({
-    posts: [],
+    products: [],
     loading: false,
     loadSuccessTick: 0,
   }),
@@ -26,22 +31,24 @@ export const DemoStore = signalStore(
     const api = inject(DemoApiService);
     const spinner = inject(SpinnerService);
 
-    const loadPosts = rxMethod<number>((limit$) =>
-      limit$.pipe(
+    const loadRandomProducts = rxMethod<LoadProductsParams>((params$) =>
+      params$.pipe(
         tap(() => {
           spinner.show('DEMO.loading');
           patchState(store, { loading: true });
         }),
-        switchMap((limit) =>
-          api.fetchPosts(limit).pipe(
+        switchMap(({ count, append = false }) =>
+          api.fetchRandomProducts(count).pipe(
             tap((data) =>
               patchState(store, {
-                posts: data,
+                products: append ? [...data, ...store.products()] : data,
                 loadSuccessTick: store.loadSuccessTick() + 1,
               }),
             ),
             catchError(() => {
-              patchState(store, { posts: [] });
+              if (!append) {
+                patchState(store, { products: [] });
+              }
               return EMPTY;
             }),
             finalize(() => {
@@ -53,6 +60,6 @@ export const DemoStore = signalStore(
       ),
     );
 
-    return { loadPosts };
+    return { loadRandomProducts };
   }),
 );

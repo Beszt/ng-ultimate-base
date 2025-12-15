@@ -4,13 +4,13 @@ import { of, throwError } from 'rxjs';
 
 import { DemoStore } from './demo.store';
 import { DemoApiService } from '../services/demo-api.service';
-import type { DemoPost } from '../models/demo-post.model';
+import type { DemoProduct } from '../models/demo-product.model';
 
 type DemoStoreContract = {
-  posts: () => DemoPost[];
+  products: () => DemoProduct[];
   loading: () => boolean;
   loadSuccessTick: () => number;
-  loadPosts: (limit: number) => void;
+  loadRandomProducts: (params: { count: number; append?: boolean }) => void;
 };
 
 describe('DemoStore', () => {
@@ -18,7 +18,7 @@ describe('DemoStore', () => {
   let api: jasmine.SpyObj<DemoApiService>;
 
   beforeEach(() => {
-    api = jasmine.createSpyObj<DemoApiService>('DemoApiService', ['fetchPosts']);
+    api = jasmine.createSpyObj<DemoApiService>('DemoApiService', ['fetchRandomProducts']);
 
     TestBed.configureTestingModule({
       providers: [DemoStore, { provide: DemoApiService, useValue: api }],
@@ -27,49 +27,104 @@ describe('DemoStore', () => {
     store = TestBed.runInInjectionContext(() => inject(DemoStore));
   });
 
-  it('loads posts and updates the state flags', () => {
-    const posts: DemoPost[] = [
-      { id: 1, userId: 1, title: 'One', body: 'First' },
-      { id: 2, userId: 1, title: 'Two', body: 'Second' },
+  it('loads products and updates the state flags', () => {
+    const products: DemoProduct[] = [
+      {
+        barcode: 1,
+        name: 'Alpha',
+        description: 'First',
+        weight: 100,
+        energy: 10,
+        protein: 1,
+        fat: 1,
+        carbohydrates: 1,
+      },
+      {
+        barcode: 2,
+        name: 'Beta',
+        description: 'Second',
+        weight: 200,
+        energy: 20,
+        protein: 2,
+        fat: 2,
+        carbohydrates: 2,
+      },
     ];
 
-    api.fetchPosts.and.callFake((limit: number) => {
-      expect(limit).toBe(5);
+    api.fetchRandomProducts.and.callFake((count: number) => {
+      expect(count).toBe(3);
       expect(store.loading()).toBeTrue();
-      return of(posts);
+      return of(products);
     });
 
-    store.loadPosts(5);
+    store.loadRandomProducts({ count: 3 });
 
-    expect(api.fetchPosts.calls.mostRecent().args).toEqual([5]);
-    expect(store.posts()).toEqual(posts);
+    expect(api.fetchRandomProducts.calls.mostRecent().args).toEqual([3]);
+    expect(store.products()).toEqual(products);
     expect(store.loading()).toBeFalse();
     expect(store.loadSuccessTick()).toBe(1);
   });
 
   it('increments the success tick on consecutive loads', () => {
-    api.fetchPosts.and.returnValue(of([{ id: 1, userId: 1, title: 'One', body: 'Body' }]));
+    const firstBatch: DemoProduct[] = [
+      {
+        barcode: 1,
+        name: 'Alpha',
+        description: 'One',
+        weight: 100,
+        energy: 10,
+        protein: 1,
+        fat: 1,
+        carbohydrates: 1,
+      },
+    ];
+    const secondBatch: DemoProduct[] = [
+      {
+        barcode: 2,
+        name: 'Beta',
+        description: 'Two',
+        weight: 200,
+        energy: 20,
+        protein: 2,
+        fat: 2,
+        carbohydrates: 2,
+      },
+    ];
 
-    store.loadPosts(3);
-    store.loadPosts(6);
+    api.fetchRandomProducts.and.returnValues(of(firstBatch), of(secondBatch));
 
-    expect(api.fetchPosts.calls.count()).toBe(2);
+    store.loadRandomProducts({ count: 2 });
+    store.loadRandomProducts({ count: 1, append: true });
+
+    expect(api.fetchRandomProducts.calls.count()).toBe(2);
+    expect(store.products()).toEqual([...secondBatch, ...firstBatch]);
     expect(store.loadSuccessTick()).toBe(2);
   });
 
-  it('clears posts but keeps the success tick unchanged when the API errors', () => {
-    const posts: DemoPost[] = [{ id: 1, userId: 1, title: 'One', body: 'Body' }];
+  it('preserves already fetched products when an append fails', () => {
+    const products: DemoProduct[] = [
+      {
+        barcode: 1,
+        name: 'Alpha',
+        description: 'First',
+        weight: 100,
+        energy: 10,
+        protein: 1,
+        fat: 1,
+        carbohydrates: 1,
+      },
+    ];
 
-    api.fetchPosts.and.returnValue(of(posts));
-    store.loadPosts(2);
+    api.fetchRandomProducts.and.returnValue(of(products));
+    store.loadRandomProducts({ count: 1 });
 
-    expect(store.posts()).toEqual(posts);
+    expect(store.products()).toEqual(products);
     expect(store.loadSuccessTick()).toBe(1);
 
-    api.fetchPosts.and.returnValue(throwError(() => new Error('failed')));
-    store.loadPosts(2);
+    api.fetchRandomProducts.and.returnValue(throwError(() => new Error('failed')));
+    store.loadRandomProducts({ count: 1, append: true });
 
-    expect(store.posts()).toEqual([]);
+    expect(store.products()).toEqual(products);
     expect(store.loading()).toBeFalse();
     expect(store.loadSuccessTick()).toBe(1);
   });

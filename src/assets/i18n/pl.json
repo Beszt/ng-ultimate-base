@@ -1,9 +1,9 @@
-﻿{
+{
   "ERROR": {
-    "network": "Błąd sieci. Sprawdź swoje połączenie internetowe.",
-    "server": "Wewnętrzny błąd serwera. Spróbuj ponownie później.",
+    "network": "Błąd sieci. Sprawdź połączenie internetowe.",
+    "server": "Błąd serwera. Spróbuj ponownie później.",
     "notFound": "Nie znaleziono zasobu.",
-    "unauthorized": "Nieautoryzowany dostęp.",
+    "unauthorized": "Brak autoryzacji.",
     "generic": "Wystąpił nieznany błąd. Spróbuj ponownie."
   },
   "TOAST": {
@@ -13,25 +13,37 @@
     "warning": "Ostrzeżenie"
   },
   "DEMO": {
-    "posts": "{{count}} Postów",
-    "loadNposts": "Załaduj {{count}} postów",
-    "loadedNposts": "Załadowano {{count}} postów",
+    "products": "{{count}} produktów",
+    "productSubtitle": "Losowe produkty pobierane z aspnet-ultimate-base",
+    "addProduct": "Dodaj kolejny losowy produkt",
+    "loadedNproducts": "Załadowano {{count}} produktów",
     "loading": "Ładowanie...",
+    "barcode": "Kod kreskowy",
+    "energy": "Energia",
+    "protein": "Białko",
+    "fat": "Tłuszcz",
+    "carbs": "Węglowodany",
     "fetchApiCard": {
-      "title": "Prezentacja Fetch API",
-      "description": "Poznaj posty obsługiwane przez signal store"
+      "title": "Prezentacja losowych produktów",
+      "description": "Prezentacja pobierania danych z API"
+    },
+    "promoCard": {
+      "eyebrow": "Szybkie API w Twojej okolicy",
+      "title": "Psst... Też chcesz fajne API?",
+      "description": "Połącz ten frontendowy szablon z szablonem backendu opartym na ASP.NET Core WebAPI i buduj fullstackowe aplikacje szybciej!",
+      "cta": "Zobacz szablon na GitHub"
     },
     "storageCard": {
-      "title": "Prezentacja Storage",
-      "description": "Zapisz tekst w local i session storage z użyciem globalnego store"
+      "title": "Prezentacja pamięci",
+      "description": "Zapisz tekst w local i session storage używając globalnego store"
     },
     "storage": {
-      "explainer": "Zapisz zwykły tekst do pamięci przeglądarki i zobacz jak SignalStore synchronizuje oba zasięgi.",
+      "explainer": "Zapisz tekst w pamięci przeglądarki i zobacz, jak SignalStore synchronizuje oba zakresy.",
       "local": {
-        "title": "Local storage"
+        "title": "Pamięć lokalna"
       },
       "session": {
-        "title": "Session storage"
+        "title": "Pamięć sesji"
       },
       "label": "Wartość",
       "currentValue": "Zapisana wartość",
@@ -46,8 +58,8 @@
       },
       "lastUpdated": "Ostatnia aktualizacja: {{scope}} o {{time}}",
       "scope": {
-        "local": "local storage",
-        "session": "session storage"
+        "local": "pamięć lokalna",
+        "session": "pamięć sesji"
       }
     }
   },

@@ -1,0 +1,11 @@
+{
+  "/api": {
+    "target": "https://aspnet-ultimate-base.obisoft.pl",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    },
+    "logLevel": "warn"
+  }
+}

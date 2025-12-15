@@ -13,13 +13,25 @@
     "warning": "Warning"
   },
   "DEMO": {
-    "posts": "{{count}} Posts",
-    "loadNposts": "Load {{count}} posts",
-    "loadedNposts": "Loaded {{count}} posts",
+    "products": "{{count}} Products",
+    "productSubtitle": "Random picks served by the ASP.NET Ultimate Base API",
+    "addProduct": "Add another random product",
+    "loadedNproducts": "Loaded {{count}} products",
     "loading": "Loading...",
+    "barcode": "Barcode",
+    "energy": "Energy",
+    "protein": "Protein",
+    "fat": "Fat",
+    "carbs": "Carbs",
     "fetchApiCard": {
-      "title": "Fetch API Demo",
-      "description": "Explore posts handled by the SignalStore"
+      "title": "Random Product API Demo",
+      "description": "Preview products served by API backend"
+    },
+    "promoCard": {
+      "eyebrow": "Build APIs faster",
+      "title": "Psst, want the cool API too?",
+      "description": "Pair this Angular starter with ASP.NET Core Web API template and ship a full stack apps faster.",
+      "cta": "Check the GitHub template"
     },
     "storageCard": {
       "title": "Storage Demo",
