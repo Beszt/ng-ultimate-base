@@ -4,11 +4,12 @@ import { Component, effect, inject, Injector } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DemoStore } from '../../state/demo.store';
 import { ToastService } from '../../../../core/services/toast.service';
+import { ApiPromoCardComponent } from '../promo-card/api-promo-card.component';
 
 @Component({
   selector: 'app-fetch-api-demo',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, ApiPromoCardComponent],
   templateUrl: './fetch-api-demo.component.html',
   styleUrls: ['./fetch-api-demo.component.scss'],
 })
@@ -19,11 +20,11 @@ export class FetchApiDemoComponent implements OnInit {
 
   ngOnInit(): void {
     this.initEffects();
-    this.store.loadPosts(5);
+    this.store.loadRandomProducts({ count: 3 });
   }
 
   onLoadMore(): void {
-    this.store.loadPosts(10);
+    this.store.loadRandomProducts({ count: 1, append: true });
   }
 
   private initEffects(): void {
@@ -31,7 +32,7 @@ export class FetchApiDemoComponent implements OnInit {
       () => {
         const tick = this.store.loadSuccessTick();
         if (tick > 1) {
-          this.toast.showSuccess('DEMO.loadedNposts', { count: this.store.posts().length });
+          this.toast.showSuccess('DEMO.loadedNproducts', { count: this.store.products().length });
         }
       },
       { injector: this.injector },

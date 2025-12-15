@@ -1,0 +1,25 @@
+<div class="promo-card relative overflow-hidden rounded-2xl border px-4 py-5 shadow-sm sm:px-6 sm:py-6">
+  <div class="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-[color:var(--var-primary)]/15 blur-3xl"></div>
+  <div class="pointer-events-none absolute -bottom-14 -left-10 h-36 w-36 rounded-full bg-[color:var(--var-accent,#22c55e)]/12 blur-3xl"></div>
+
+  <div class="relative space-y-3">
+    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--var-text-secondary)]">
+      {{ 'DEMO.promoCard.eyebrow' | translate }}
+    </p>
+    <h3 class="text-xl font-semibold text-[color:var(--var-text-primary)]">
+      {{ 'DEMO.promoCard.title' | translate }}
+    </h3>
+    <p class="text-sm text-[color:var(--var-text-secondary)]">
+      {{ 'DEMO.promoCard.description' | translate }}
+    </p>
+    <a
+      class="inline-flex w-fit items-center gap-2 rounded-lg bg-[color:var(--var-primary)] px-4 py-2 text-sm font-semibold text-[color:var(--var-primary-contrast)] shadow-sm transition hover:bg-[color:var(--var-primary)]/90 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-[color:var(--var-primary)]"
+      href="https://github.com/Beszt/aspnet-ultimate-base"
+      rel="noreferrer noopener"
+      target="_blank"
+    >
+      {{ 'DEMO.promoCard.cta' | translate }}
+      <span aria-hidden="true">-></span>
+    </a>
+  </div>
+</div>

@@ -1,11 +1,13 @@
 <app-demo></app-demo>
 
 <div
-  *ngIf="spinner.isVisible()"
-  class="fixed inset-0 z-50 flex items-center justify-center bg-[color:var(--var-background)]/65 backdrop-blur-sm"
+  class="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-200"
+  [class.opacity-0]="!spinner.isVisible()"
+  [class.pointer-events-none]="!spinner.isVisible()"
+  [attr.aria-hidden]="!spinner.isVisible()"
   role="status"
   aria-live="polite"
-  aria-busy="true"
+  [attr.aria-busy]="spinner.isVisible()"
 >
   <div
     class="flex items-center gap-3 rounded-xl border border-[color:var(--var-border)] bg-[color:var(--var-surface)] px-6 py-4 shadow-lg"
